@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSampleProject", "CSha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{530F1992-65C6-4CB4-82EC-85FA81A7104B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcEngineService", "CalcEngineService\CalcEngineService.csproj", "{FE9FA1D7-EF0E-453B-AA69-8B70B880C21E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE9FA1D7-EF0E-453B-AA69-8B70B880C21E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE9FA1D7-EF0E-453B-AA69-8B70B880C21E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE9FA1D7-EF0E-453B-AA69-8B70B880C21E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE9FA1D7-EF0E-453B-AA69-8B70B880C21E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
