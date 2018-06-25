@@ -17,5 +17,21 @@ namespace UnitTestProject1
         {
             Assert.AreEqual(1, 1);
         }
+
+        [Test]
+        public void TestCalculatorCalcAverageValue()
+        {
+            int[] values = { 1, 2, 5, 6, 7 };
+            CalcEngineService.Calculator calc = new CalcEngineService.Calculator();
+            Assert.AreEqual(calc.calcAverageValue(values), 4.2);
+        }
+
+        [Test]
+        public void TestCalculatorCalcMedianValue()
+        {
+            int[] values = { 1, 2, 5, 6, 7 };
+            CalcEngineService.Calculator calc = new CalcEngineService.Calculator();
+            Assert.AreEqual(calc.calcMedianValue(values), 5);
+        }
     }
 }

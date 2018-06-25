@@ -54,6 +54,7 @@
     <Compile Include="CalcEngineService.Designer.cs">
       <DependentUpon>CalcEngineService.cs</DependentUpon>
     </Compile>
+    <Compile Include="Calculator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
