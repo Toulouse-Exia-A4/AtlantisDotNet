@@ -7,4 +7,4 @@ install:
 
 script:
   - xbuild /p:Configuration=Release CSharpSampleProject.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./MyProject.Tests/bin/Release/MyProject.Tests.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./CSharpSampleProject.Tests/bin/Release/CSharpSampleProject.Tests.dll
