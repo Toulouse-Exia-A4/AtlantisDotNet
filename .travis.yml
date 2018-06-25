@@ -1,0 +1,10 @@
+language: csharp
+solution: CSharpSampleProject.sln
+
+install:
+  - nuget restore CSharpSampleProject.sln
+  - nuget install NUnit.Console -Version 3.8.0 -OutputDirectory testrunner
+
+script:
+  - msbuild /p:Configuration=Release CSharpSampleProject.sln
+  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./UnitTestProject1/bin/Release/UnitTestProject1.dll
