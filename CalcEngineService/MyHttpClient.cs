@@ -4,10 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CalcEngineService;
 
 namespace CalcEngineService
 {
-    class MyHttpClient
+    public class MyHttpClient
     {
         static HttpClient client = new HttpClient();
         
@@ -21,12 +22,14 @@ namespace CalcEngineService
             return response.Headers.Location;
         }
 
+        /*
         static void Main()
         {
             RunAsync().GetAwaiter().GetResult();
         }
+        */
 
-        static async Task RunAsync()
+        public static async Task RunAsync()
         {
             // Update port # in the following line.
             client.BaseAddress = new Uri("http://localhost:64195/");
@@ -37,7 +40,9 @@ namespace CalcEngineService
             try
             {
                 // Create the calculated metric
-                List<CalculatedMetricsModel> calculatedMetricsModels = null; // bouchon
+                Calculator calc = new Calculator();
+                List<CalculatedMetricsModel> calculatedMetrics = calc.generateCalculatedMetrics(); // bouchon
+                
                 
                 /*
                 CalculatedMetricsModel calculatedMetricsModel = new CalculatedMetricsModel
@@ -50,7 +55,7 @@ namespace CalcEngineService
                 };
                 */
 
-                var url = await CreateCalculatedMetric(calculatedMetricsModels);
+                var url = await CreateCalculatedMetric(calculatedMetrics);
                 Console.WriteLine($"Created at {url}");
             }
             catch (Exception e)
@@ -60,5 +65,6 @@ namespace CalcEngineService
 
             Console.ReadLine();
         }
+
     }
 }

@@ -29,16 +29,9 @@ namespace CalcEngineService
 
         protected override void OnStart(string[] args)
         {
-            // Set up a timer to trigger every minute.  
-            System.Timers.Timer timer = new System.Timers.Timer();
-            timer.Interval = 60000; // 60 seconds  
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            timer.Start();
-        }
-        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            // TODO: Insert monitoring activities here.  
-            eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+            eventLog1.WriteEntry("Calc Engine started", EventLogEntryType.Information);
+            MyHttpClient.RunAsync().GetAwaiter().GetResult();
+            eventLog1.WriteEntry("Calc Engine finished working", EventLogEntryType.Information);
         }
 
         protected override void OnStop()

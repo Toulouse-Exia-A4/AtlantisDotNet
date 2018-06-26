@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace CalcEngineService
 {
-    public class CalculatedMetricsModel
+    class RawMetricsModel
     {
+        public string Id { get; set; }
         public string deviceId { get; set; }
-        public string dateTimeStart { get; set; }
-        public string dateTimeEnd { get; set; }
+        public string dateTime { get; set; }
         public string value { get; set; }
-        public string calculType { get; set; }
     }
 }

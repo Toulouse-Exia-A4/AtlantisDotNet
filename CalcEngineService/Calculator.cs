@@ -39,5 +39,11 @@ namespace CalcEngineService
         {
             return values.Min();
         }
+
+        public List<CalculatedMetricsModel> generateCalculatedMetrics()
+        {
+            // TODO use DAL to generate calculated metrics
+            return new List<CalculatedMetricsModel>();
+        }
     }
 }
