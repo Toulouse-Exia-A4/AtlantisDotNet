@@ -30,12 +30,12 @@ namespace CalcEngineService
             return median;
         }
 
-        public double higherValue(int[] values)
+        public double calcHighestValue(int[] values)
         {
             return values.Max();
         }
 
-        public double lowerValue(int[] values)
+        public double calcLowestValue(int[] values)
         {
             return values.Min();
         }
