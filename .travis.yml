@@ -8,4 +8,4 @@ install:
 script:
   - msbuild /p:Configuration=Release CSharpSampleProject.sln
   - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./UnitTestProject1/bin/Release/UnitTestProject1.dll
-  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Atlantis.UserData.DAL.Tests/bin/Debug/Atlantis.UserData.DAL.Tests.dll
+  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Atlantis.UserData.DAL.Tests/bin/Release/Atlantis.UserData.DAL.Tests.dll
