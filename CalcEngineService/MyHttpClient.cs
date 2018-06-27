@@ -43,18 +43,6 @@ namespace CalcEngineService
                 Calculator calc = new Calculator();
                 List<CalculatedMetricsModel> calculatedMetrics = calc.generateCalculatedMetrics(); // bouchon
                 
-                
-                /*
-                CalculatedMetricsModel calculatedMetricsModel = new CalculatedMetricsModel
-                {
-                    deviceId = "1234",
-                    dateTimeStart = "date",
-                    dateTimeEnd = "date",
-                    value = "value",
-                    type = "type"
-                };
-                */
-
                 var url = await CreateCalculatedMetric(calculatedMetrics);
                 Console.WriteLine($"Created at {url}");
             }

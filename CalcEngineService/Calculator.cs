@@ -27,7 +27,7 @@ namespace CalcEngineService
             {
                 median = (values[n / 2 - 1] + values[n / 2]) / 2.0d;
             }
-            return median;
+            return median; 
         }
 
         public double calcHighestValue(int[] values)
@@ -42,7 +42,33 @@ namespace CalcEngineService
 
         public List<CalculatedMetricsModel> generateCalculatedMetrics()
         {
-            // TODO use DAL to generate calculated metrics
+            // TODO retrieve Model with DAL (stamp)
+            List<RawMetricsModel> rawMetrics = new List<RawMetricsModel>();
+            RawMetricsModel rawMetric = new RawMetricsModel();
+            rawMetric.Id = 1;
+            rawMetric.DeviceId = 1;
+            rawMetric.DateTime = 4453545;
+            rawMetric.Value = 30;
+            rawMetrics.Add(rawMetric);
+            rawMetric.Id = 2;
+            rawMetric.DeviceId = 1;
+            rawMetric.DateTime = 4453645;
+            rawMetric.Value = 28;
+            rawMetrics.Add(rawMetric);
+
+            // Calculation
+            List<CalculatedMetricsModel> calculatedMetrics = Calculation(rawMetrics);
+            
+            return Calculation(rawMetrics);
+        }
+
+        public List<CalculatedMetricsModel> Calculation(List<RawMetricsModel> rawMetrics)
+        {
+            List<CalculatedMetricsModel> calculatedMetrics = new List<CalculatedMetricsModel>();
+            foreach (RawMetricsModel rawMetric in rawMetrics)
+            {
+                // TODO algorithm
+            }
             return new List<CalculatedMetricsModel>();
         }
     }
