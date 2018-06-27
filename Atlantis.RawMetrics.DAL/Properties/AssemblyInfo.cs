@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Les informations générales relatives à un assembly dépendent de
 // l'ensemble d'attributs suivant. Changez les valeurs de ces attributs pour modifier les informations
 // associées à un assembly.
-[assembly: AssemblyTitle("CSharpSampleProject")]
+[assembly: AssemblyTitle("Atlantis.RawMetrics.DAL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("CSharpSampleProject")]
+[assembly: AssemblyProduct("Atlantis.RawMetrics.DAL")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Le GUID suivant est pour l'ID de la typelib si ce projet est exposé à COM
-[assembly: Guid("f0ad4ab8-8185-4336-96d0-4f5df53a8b00")]
+[assembly: Guid("9f424704-7da8-4ec5-b9c7-2b2e2a83d158")]
 
 // Les informations de version pour un assembly se composent des quatre valeurs suivantes :
 //
