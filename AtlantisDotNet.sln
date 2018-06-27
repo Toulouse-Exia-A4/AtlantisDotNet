@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSampleProject", "CSharpSampleProject\CSharpSampleProject.csproj", "{F0AD4AB8-8185-4336-96D0-4F5DF53A8B00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{530F1992-65C6-4CB4-82EC-85FA81A7104B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcEngineService.Tests", "UnitTestProject1\CalcEngineService.Tests.csproj", "{530F1992-65C6-4CB4-82EC-85FA81A7104B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcEngineService", "CalcEngineService\CalcEngineService.csproj", "{FE9FA1D7-EF0E-453B-AA69-8B70B880C21E}"
 EndProject

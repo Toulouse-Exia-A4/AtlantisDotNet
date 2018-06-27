@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace UnitTestProject1
 {
     [TestFixture]
-    public class UnitTest1
+    public class CalculatorTests
     {
         [Test]
         public void TestMethod1()
