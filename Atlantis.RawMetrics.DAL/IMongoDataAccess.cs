@@ -11,8 +11,6 @@ namespace Atlantis.RawMetrics.DAL
     {
         TEntity Get(TIdentifier id);
 
-        List<TEntity> GetAll();
-
         TEntity Create(TEntity entity);
 
         TEntity Update(TEntity entity);

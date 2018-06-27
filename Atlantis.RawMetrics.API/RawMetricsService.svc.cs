@@ -17,7 +17,7 @@ namespace Atlantis.RawMetrics.API
 
         public RawMetricsService()
         {
-            _context = new RawMetricsContext();
+            _context = new RawMetricsContext(true);
             _dao = new RawMetricsDAO(_context);
         }
 
@@ -28,7 +28,7 @@ namespace Atlantis.RawMetrics.API
 
         public string GetRawMetricsFromDevice(string deviceId, long date, int amount)
         {
-            var results = _dao.GetAllMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date)).Take(amount);
+            var results = _dao.GetMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date).Ticks).Take(amount);
 
             return JsonConvert.SerializeObject(results);
         }

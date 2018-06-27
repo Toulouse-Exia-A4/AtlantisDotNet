@@ -1,4 +1,5 @@
-﻿using MongoDB.Driver;
+﻿using Atlantis.RawMetrics.DAL.Models;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -10,31 +11,40 @@ namespace Atlantis.RawMetrics.DAL
 {
     public class RawMetricsContext
     {
-        MongoClient client;
-        public IMongoDatabase database;
-
-        public RawMetricsContext()
+        public virtual IMongoCollection<RawMetric> RawMetrics
         {
-            var dbName = ConfigurationManager.AppSettings["DbName"];
-            var dbUsername = ConfigurationManager.AppSettings["DbUsername"];
-            var dbPassword = ConfigurationManager.AppSettings["DbPassword"];
-            var dbPort = ConfigurationManager.AppSettings["DbPort"];
-            var dbHost = ConfigurationManager.AppSettings["DbHost"];
-
-            var credentials = MongoCredential.CreateCredential(dbName, dbUsername, dbPassword);
-
-            var settings = new MongoClientSettings
+            get
             {
-                Credential = credentials,
-                Server = new MongoServerAddress(dbHost, Convert.ToInt32(dbPort))
-            };
+                string collectionName = ConfigurationManager.AppSettings["RawMetricsCollection"];
+                if (collectionName == null)
+                    throw new Exception("RawMetricsCollection name is missing in config file.");
+                return database.GetCollection<RawMetric>(collectionName);
+            }
+        }
 
-            client = new MongoClient(settings);
+        MongoClient client;
+        IMongoDatabase database;
+
+        public RawMetricsContext() { }
+
+        public RawMetricsContext(bool autoInit = true)
+        {
+            if (autoInit)
+            {
+                client = new MongoClient(ConfigurationManager.AppSettings["DbConnectionString"]);
+                database = client.GetDatabase(ConfigurationManager.AppSettings["DbName"]);
+            }
+        }
+
+        public RawMetricsContext(string connectionString, string dbName)
+        {
+            client = new MongoClient(connectionString);
             database = client.GetDatabase(dbName);
         }
 
-        public RawMetricsContext(IMongoDatabase db)
+        public RawMetricsContext(MongoClient client, IMongoDatabase db)
         {
+            this.client = client;
             database = db;
         }
     }
