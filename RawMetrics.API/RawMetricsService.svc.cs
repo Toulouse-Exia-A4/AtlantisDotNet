@@ -7,7 +7,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using System.Text;
 
 namespace RawMetrics.API
 {
@@ -29,7 +28,7 @@ namespace RawMetrics.API
         public List<RawMetric> GetRawMetricsFromDevice(string deviceId, long date, int amount)
         {
             if (deviceId == null || deviceId.Length == 0)
-                throw new System.ServiceModel.Web.WebFaultException<string>("DeviceId cannot be empty.", System.Net.HttpStatusCode.BadRequest);
+                throw new WebFaultException<string>("DeviceId cannot be empty.", System.Net.HttpStatusCode.BadRequest);
             if (amount > 0)
             {
                 var results = _dao.GetMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date).Ticks).Take(amount);
