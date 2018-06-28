@@ -2,11 +2,9 @@
 using Atlantis.RawMetrics.DAL.Models;
 using MongoDB.Driver;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.ServiceModel;
 using System.ServiceModel.Web;
 
 namespace RawMetrics.API.Tests
