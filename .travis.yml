@@ -1,15 +1,10 @@
 language: csharp
-mono:
-  - 4.8.1
-  
-solution: AtlantisDotNet.sln
+mono: none
+dotnet: 2.0.0
 
 install:
-  - nuget restore AtlantisDotNet.sln
-  - nuget install NUnit.Console -Version 3.8.0 -OutputDirectory testrunner
+  - dotnet restore
 
 script:
-  - xbuild /p:Configuration=Release AtlantisDotNet.sln
-  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Atlantis.UserData.DAL.Tests/bin/Release/Atlantis.UserData.DAL.Tests.dll
-  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Atlantis.RawMetrics.DAL.Tests/bin/Release/Atlantis.RawMetrics.DAL.Tests.dll
-  - mono ./testrunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./RawMetrics.API.Tests/bin/Release/RawMetrics.API.Tests.dll
+  - dotnet build
+  - dotnet test RawMetrics.API.Tests/RawMetrics.API.Tests.csproj
