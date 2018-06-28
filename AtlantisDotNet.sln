@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpSampleProject", "CSharpSampleProject\CSharpSampleProject.csproj", "{F0AD4AB8-8185-4336-96D0-4F5DF53A8B00}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject1", "UnitTestProject1\UnitTestProject1.csproj", "{530F1992-65C6-4CB4-82EC-85FA81A7104B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.UserData.DAL", "Atlantis.UserData.DAL\Atlantis.UserData.DAL.csproj", "{628588F5-A876-4770-8375-0E58EAD4BCBB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.UserData.DAL.Tests", "Atlantis.UserData.DAL.Tests\Atlantis.UserData.DAL.Tests.csproj", "{313BE3A0-4F1A-4E8F-A46A-33B8D219BE9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.RawMetrics.DAL", "Atlantis.RawMetrics.DAL\Atlantis.RawMetrics.DAL.csproj", "{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.RawMetrics.DAL.Tests", "Atlantis.RawMetrics.DAL.Tests\Atlantis.RawMetrics.DAL.Tests.csproj", "{72E81285-5D5D-41FD-A985-C1EA3847AAF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,14 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F0AD4AB8-8185-4336-96D0-4F5DF53A8B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F0AD4AB8-8185-4336-96D0-4F5DF53A8B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F0AD4AB8-8185-4336-96D0-4F5DF53A8B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F0AD4AB8-8185-4336-96D0-4F5DF53A8B00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{628588F5-A876-4770-8375-0E58EAD4BCBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{628588F5-A876-4770-8375-0E58EAD4BCBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{628588F5-A876-4770-8375-0E58EAD4BCBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +25,14 @@ Global
 		{313BE3A0-4F1A-4E8F-A46A-33B8D219BE9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{313BE3A0-4F1A-4E8F-A46A-33B8D219BE9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{313BE3A0-4F1A-4E8F-A46A-33B8D219BE9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E81285-5D5D-41FD-A985-C1EA3847AAF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E81285-5D5D-41FD-A985-C1EA3847AAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E81285-5D5D-41FD-A985-C1EA3847AAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E81285-5D5D-41FD-A985-C1EA3847AAF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
