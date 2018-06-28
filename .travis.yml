@@ -1,10 +1,6 @@
 language: csharp
 solution: AtlantisDotNet.sln
-sudo: enabled
-before_install:
-  - wget http://ftp.de.debian.org/debian/pool/main/m/mono/libmono-system-servicemodel4.0-cil_2.10.8.1-8+deb7u1_all.deb
-  - sudo dpkg -i libmono-system-servicemodel4.0-cil_2.10.8.1-8+deb7u1_all.deb
-  
+
 install:
   - nuget restore AtlantisDotNet.sln
   - nuget install NUnit.Console -Version 3.8.0 -OutputDirectory testrunner
