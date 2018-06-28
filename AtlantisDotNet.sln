@@ -13,13 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.RawMetrics.DAL.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawMetrics.API", "RawMetrics.API\RawMetrics.API.csproj", "{AD6DD117-C6AA-4E68-956B-64345CA5FDA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawMetrics.API.Tests", "RawMetrics.API.Tests\RawMetrics.API.Tests.csproj", "{D2751487-D65A-4C7B-A8F7-B15CB874C49F}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{42222AC7-C677-4C65-BFD6-30B77060BAE9}"
 	ProjectSection(SolutionItems) = preProject
 		UserData.CreateDatabase.sql = UserData.CreateDatabase.sql
 		UserData.InsertFakeData.sql = UserData.InsertFakeData.sql
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RawMetrics.API.Tests", "RawMetrics.API.Tests\RawMetrics.API.Tests.csproj", "{D2751487-D65A-4C7B-A8F7-B15CB874C49F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
