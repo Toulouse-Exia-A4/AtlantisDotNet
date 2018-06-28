@@ -1,13 +1,13 @@
-﻿using Atlantis.RawMetrics.DAL;
+﻿using System;
+using System.Collections.Generic;
+using System.ServiceModel.Web;
+using Atlantis.RawMetrics.DAL;
 using Atlantis.RawMetrics.DAL.Models;
 using MongoDB.Driver;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.ServiceModel.Web;
 
-namespace RawMetrics.API.Tests
+namespace Atlantis.RawMetrics.Service.Tests
 {
     [TestFixture]
     public class RawMetricsServiceTests

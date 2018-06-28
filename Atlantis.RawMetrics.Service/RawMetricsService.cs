@@ -1,14 +1,14 @@
 ﻿using Atlantis.RawMetrics.DAL;
 using Atlantis.RawMetrics.DAL.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using System.Text;
 
-namespace RawMetrics.API
+namespace Atlantis.RawMetrics.Service
 {
     public class RawMetricsService : IRawMetricsService
     {

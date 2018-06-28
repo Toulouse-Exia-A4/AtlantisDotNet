@@ -2,18 +2,18 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("RawMetrics.API.Tests")]
+[assembly: AssemblyTitle("Atlantis.RawMetrics.Service.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("RawMetrics.API.Tests")]
+[assembly: AssemblyProduct("Atlantis.RawMetrics.Service.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: Guid("d2751487-d65a-4c7b-a8f7-b15cb874c49f")]
+[assembly: Guid("7ffad03d-c737-4bc1-a1f1-48e2dc5a09d6")]
 
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
