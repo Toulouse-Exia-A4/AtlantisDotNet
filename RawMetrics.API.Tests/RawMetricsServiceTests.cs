@@ -5,6 +5,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.ServiceModel.Web;
 
 namespace RawMetrics.API.Tests
 {
@@ -58,7 +59,8 @@ namespace RawMetrics.API.Tests
 
             var svc = new RawMetricsService(mockDao.Object);
 
-            Assert.That(() => svc.GetRawMetricsFromDevice("", new DateTime(2018, 1, 3).Ticks, 2), Throws.Exception.With.Property("Message").EqualTo("Bad Request").And.Property("Detail").EqualTo("DeviceId cannot be empty."));
+            Assert.Throws<WebFaultException>(() => svc.GetRawMetricsFromDevice("", new DateTime(2018, 1, 3).Ticks, 2));
+            //Assert.That(() => svc.GetRawMetricsFromDevice("", new DateTime(2018, 1, 3).Ticks, 2), Throws.Exception.With.Property("Message").EqualTo("Bad Request").And.Property("Detail").EqualTo("DeviceId cannot be empty."));
         }
 
         [Test]
