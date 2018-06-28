@@ -35,7 +35,7 @@ namespace Atlantis.UserData.DAL
                     throw new Exception("User already registered.");
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -71,7 +71,19 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.User.Find(id);
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public User GetByUserId(string userId)
+        {
+            try
+            {
+                return _context.User.Where(x => x.UserId == userId).FirstOrDefault();
+            }
+            catch (Exception)
             {
                 throw;
             }
@@ -94,18 +106,53 @@ namespace Atlantis.UserData.DAL
             try
             {
                 var usr = _context.User.Find(id);
-                _context.User.Remove(usr);
-                _context.SaveChanges();
+                if (usr != null)
+                {
+                    _context.User.Remove(usr);
+                    _context.SaveChanges();
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
+        public bool RemoveByUserId(string userId)
+        {
+            try
+            {
+                var usr = _context.User.Where(x => x.UserId == userId).FirstOrDefault();
+                if (usr != null)
+                {
+                    _context.User.Remove(usr);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return false;
+        }
+
         public User Update(User newEntity)
         {
             throw new Exception("User cannot be modified.");
+        }
+
+        public List<Device> GetUserDevices(string userId)
+        {
+            try
+            {
+                var user =_context.User.Where(x => x.UserId == userId).FirstOrDefault();
+                return user != null ? user.Device.ToList() : new List<Device>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

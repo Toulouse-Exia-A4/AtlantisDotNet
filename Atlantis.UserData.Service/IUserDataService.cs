@@ -16,11 +16,83 @@ namespace Atlantis.UserData.Service
         [OperationContract]
         [WebInvoke(
         Method = "GET",
-        UriTemplate = "/Users",
+        UriTemplate = "/users",
         BodyStyle = WebMessageBodyStyle.Bare,
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json
         )]
         List<User> GetAllUsers();
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "GET",
+        UriTemplate = "/users/{userId}",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        User GetUser(string userId);
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "POST",
+        UriTemplate = "/users/create",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        User Create(string userId);
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "POST",
+        UriTemplate = "/users/remove",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        void Remove(string userId);
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "GET",
+        UriTemplate = "/users/{userId}/devices",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        List<Device> GetUserDevices(string userId);
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "GET",
+        UriTemplate = "/devices",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        List<Device> GetDevices();
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "GET",
+        UriTemplate = "/devices/{deviceId}",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        Device GetDevice(string deviceId);
+
+        [OperationContract]
+        [WebInvoke(
+        Method = "POST",
+        UriTemplate = "/devices",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        Device AddDevice(Device device);
+
+
     }
 }
