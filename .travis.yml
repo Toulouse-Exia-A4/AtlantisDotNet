@@ -1,6 +1,6 @@
 language: csharp
 mono:
-  - latest
+  - 4.5.0.0
   
 solution: AtlantisDotNet.sln
 
