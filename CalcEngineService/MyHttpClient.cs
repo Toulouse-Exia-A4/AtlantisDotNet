@@ -32,7 +32,7 @@ namespace CalcEngineService
         public static async Task RunAsync()
         {
             // Update port # in the following line.
-            client.BaseAddress = new Uri("http://localhost:64195/");
+            client.BaseAddress = new Uri("http://10.131.128.82:8080/AtlantisJEE/api/calc");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
@@ -41,7 +41,7 @@ namespace CalcEngineService
             {
                 // Create the calculated metric
                 Calculator calc = new Calculator();
-                List<CalculatedMetricsModel> calculatedMetrics = calc.generateCalculatedMetrics(); // bouchon
+                List<CalculatedMetricsModel> calculatedMetrics = calc.generateCalculatedMetrics();
                 
                 var url = await CreateCalculatedMetric(calculatedMetrics);
                 Console.WriteLine($"Created at {url}");
