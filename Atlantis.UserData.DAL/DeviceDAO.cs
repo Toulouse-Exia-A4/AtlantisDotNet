@@ -151,7 +151,8 @@ namespace Atlantis.UserData.DAL
                     }
                 }
 
-                return _context.Device.Where(x => x.UserId == user.Id).ToList();
+                var results = _context.Device.Where(x => x.UserId == user.Id);
+                return results != null ? results.ToList() : new List<Device>();
             }
             catch (Exception)
             {
