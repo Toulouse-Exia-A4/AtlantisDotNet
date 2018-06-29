@@ -16,7 +16,7 @@ namespace Atlantis.UserData.DAL
             _context = context;
         }
 
-        public User Add(User entity)
+        public virtual User Add(User entity)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace Atlantis.UserData.DAL
             }
         }
 
-        public List<User> All()
+        public virtual List<User> All()
         {
             try
             {
@@ -77,7 +77,7 @@ namespace Atlantis.UserData.DAL
             }
         }
 
-        public User GetByUserId(string userId)
+        public virtual User GetByUserId(string userId)
         {
             try
             {
@@ -118,7 +118,7 @@ namespace Atlantis.UserData.DAL
             }
         }
 
-        public bool RemoveByUserId(string userId)
+        public virtual bool RemoveByUserId(string userId)
         {
             try
             {
@@ -140,19 +140,6 @@ namespace Atlantis.UserData.DAL
         public User Update(User newEntity)
         {
             throw new Exception("User cannot be modified.");
-        }
-
-        public List<Device> GetUserDevices(string userId)
-        {
-            try
-            {
-                var user =_context.User.Where(x => x.UserId == userId).FirstOrDefault();
-                return user != null ? user.Device.ToList() : new List<Device>();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Atlantis.UserData.DAL
             _context = context;
         }
 
-        public DeviceType Add(DeviceType entity)
+        public virtual DeviceType Add(DeviceType entity)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace Atlantis.UserData.DAL
                     return deviceType;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -42,7 +42,7 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.DeviceType.ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -54,7 +54,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.DeviceType.ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -66,7 +66,7 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.DeviceType.Find(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -78,7 +78,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.DeviceType.FindAsync(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -91,7 +91,7 @@ namespace Atlantis.UserData.DAL
                 var entity = _context.DeviceType.Find(id);
                 _context.DeviceType.Remove(entity);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -107,7 +107,19 @@ namespace Atlantis.UserData.DAL
                 _context.SaveChanges();
                 return entity;
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public virtual DeviceType GetByTypeName(string type)
+        {
+            try
+            {
+                return _context.DeviceType.Where(x => x.Type == type).FirstOrDefault();
+            }
+            catch (Exception)
             {
                 throw;
             }

@@ -41,7 +41,7 @@ namespace Atlantis.UserData.Service
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json
         )]
-        User Create(string userId);
+        User CreateUser(string userId);
 
         [OperationContract]
         [WebInvoke(
@@ -51,7 +51,7 @@ namespace Atlantis.UserData.Service
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json
         )]
-        void Remove(string userId);
+        void RemoveUser(string userId);
 
         [OperationContract]
         [WebInvoke(
@@ -93,6 +93,24 @@ namespace Atlantis.UserData.Service
         )]
         Device AddDevice(Device device);
 
+        [OperationContract]
+        [WebInvoke(
+        Method = "POST",
+        UriTemplate = "/devices/link",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        void LinkDeviceToUser(string deviceId, string userId);
 
+        [OperationContract]
+        [WebInvoke(
+        Method = "POST",
+        UriTemplate = "/devices/register",
+        BodyStyle = WebMessageBodyStyle.Bare,
+        RequestFormat = WebMessageFormat.Json,
+        ResponseFormat = WebMessageFormat.Json
+        )]
+        void RegisterDevice(string deviceId, string deviceType, string deviceUnit = "");
     }
 }

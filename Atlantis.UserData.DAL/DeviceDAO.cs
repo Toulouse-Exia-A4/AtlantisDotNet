@@ -16,7 +16,7 @@ namespace Atlantis.UserData.DAL
             _context = context;
         }
 
-        public Device Add(Device entity)
+        public virtual Device Add(Device entity)
         {
             try
             {
@@ -39,19 +39,19 @@ namespace Atlantis.UserData.DAL
                 _context.SaveChanges();
                 return device;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<Device> All()
+        public virtual List<Device> All()
         {
             try
             {
                 return _context.Device.ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -63,7 +63,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.Device.ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -75,7 +75,7 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.Device.Find(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -87,7 +87,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.Device.FindAsync(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -101,13 +101,13 @@ namespace Atlantis.UserData.DAL
                 _context.Device.Remove(device);
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public Device Update(Device newEntity)
+        public virtual Device Update(Device newEntity)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace Atlantis.UserData.DAL
                 _context.SaveChanges();
                 return device;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -128,7 +128,7 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.Device.Where(x => x.DeviceTypeId == type.Id).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -138,21 +138,34 @@ namespace Atlantis.UserData.DAL
         {
             try
             {
+                if(user.Id == 0)
+                {
+                    var usr = _context.User.Where(x => x.UserId == user.UserId).FirstOrDefault();
+                    if(usr != null)
+                    {
+                        user.Id = usr.Id;
+                    }
+                    else
+                    {
+                        throw new Exception("User not found.");
+                    }
+                }
+
                 return _context.Device.Where(x => x.UserId == user.Id).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public Device GetByName(string deviceId)
+        public virtual Device GetByName(string deviceId)
         {
             try
             {
                 return _context.Device.FirstOrDefault(x => x.DeviceId == deviceId);
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 throw;
             }

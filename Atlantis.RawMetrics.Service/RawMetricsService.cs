@@ -31,7 +31,7 @@ namespace Atlantis.RawMetrics.Service
                 throw new WebFaultException<string>("DeviceId cannot be empty.", System.Net.HttpStatusCode.BadRequest);
             if (amount > 0)
             {
-                var results = _dao.GetMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date).Ticks).Take(amount);
+                var results = _dao.GetMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date).Ticks).Take(amount).OrderByDescending(x => x.Date);
                 return results.ToList();
             }
             return new List<RawMetric>();

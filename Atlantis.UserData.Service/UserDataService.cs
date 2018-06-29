@@ -2,83 +2,185 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 
 namespace Atlantis.UserData.Service
 {
     public class UserDataService : IUserDataService
     {
+        private UserDataContext _context;
+
+        public virtual UserDAO UserDAO
+        {
+            get { return new UserDAO(_context); }
+        }
+
+        public virtual DeviceDAO DeviceDAO
+        {
+            get { return new DeviceDAO(_context); }
+        }
+
+        public virtual AdminDAO AdminDAO
+        {
+            get { return new AdminDAO(_context); }
+        }
+
+        public virtual DeviceTypeDAO DeviceTypeDAO
+        {
+            get { return new DeviceTypeDAO(_context); }
+        }
+
+        public UserDataService()
+        {
+            _context = new UserDataContext();
+        }
+
+        public UserDataService(UserDataContext ctx)
+        {
+            _context = ctx;
+        }
+
         public Device AddDevice(Device device)
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new DeviceDAO(ctx);
-                return dao.Add(device);
+                return DeviceDAO.Add(device);
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
-        public User Create(string userId)
+        public User CreateUser(string userId)
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new UserDAO(ctx);
-                return dao.Add(new User() { UserId = userId });
+                return UserDAO.Add(new User() { UserId = userId });
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
         public List<User> GetAllUsers()
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new UserDAO(ctx);
-                return dao.All();
+                return UserDAO.All();
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
         public Device GetDevice(string deviceId)
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new DeviceDAO(ctx);
-                return dao.GetByName(deviceId);
+                return DeviceDAO.GetByName(deviceId);
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
         public List<Device> GetDevices()
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new DeviceDAO(ctx);
-                return dao.All();
+                return DeviceDAO.All();
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
         public User GetUser(string userId)
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new UserDAO(ctx);
-                return dao.GetByUserId(userId);
+                return UserDAO.GetByUserId(userId);
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
         public List<Device> GetUserDevices(string userId)
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new UserDAO(ctx);
-                return dao.GetUserDevices(userId);
+                return DeviceDAO.GetAllDevicesOfUser(new User() { UserId = userId });
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
 
-        public void Remove(string userId)
+        public void LinkDeviceToUser(string deviceId, string userId)
         {
-            using (var ctx = new UserDataContext())
+            try
             {
-                var dao = new UserDAO(ctx);
-                dao.RemoveByUserId(userId);
+                var user = UserDAO.GetByUserId(userId);
+                var device = DeviceDAO.GetByName(deviceId);
+
+                if (user != null && device != null)
+                {
+                    device.UserId = user.Id;
+                    DeviceDAO.Update(device);
+                }
+                else
+                {
+                    throw new Exception("User or Device not found.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.BadRequest);
+            }
+        }
+
+        public void RegisterDevice(string deviceId, string deviceType, string deviceUnit = "")
+        {
+            try
+            {
+                var dt = DeviceTypeDAO.GetByTypeName(deviceType);
+
+                if (dt == null)
+                {
+                    dt = new DeviceType() { Type = deviceType, Unit = deviceUnit };
+                    dt = DeviceTypeDAO.Add(dt);
+                }
+
+                Device device = new Device() { DeviceTypeId = dt.Id, DeviceId = deviceId };
+                DeviceDAO.Add(device);
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
+            }
+        }
+
+        public void RemoveUser(string userId)
+        {
+            try
+            {
+                UserDAO.RemoveByUserId(userId);
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
     }
