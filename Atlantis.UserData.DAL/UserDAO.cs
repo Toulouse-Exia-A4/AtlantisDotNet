@@ -22,18 +22,12 @@ namespace Atlantis.UserData.DAL
             {
                 if (_context.User.FirstOrDefault(x => x.UserId == entity.UserId) == null)
                 {
-                    var user = _context.User.Add(new User()
-                    {
-                        UserId = entity.UserId
-                    });
+                    var user = _context.User.Add(entity);
 
                     _context.SaveChanges();
                     return user;
                 }
-                else
-                {
-                    throw new Exception("User already registered.");
-                }
+                return null;
             }
             catch (Exception)
             {
@@ -140,6 +134,18 @@ namespace Atlantis.UserData.DAL
         public User Update(User newEntity)
         {
             throw new Exception("User cannot be modified.");
+        }
+
+        public ICollection<Device> GetUserDevices(User user)
+        {
+            try
+            {
+                return _context.User.Find(user.Id).Device;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }

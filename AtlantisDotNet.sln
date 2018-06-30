@@ -43,7 +43,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.RawMetrics.API", "Atlantis.RawMetrics.API\", "{56D138CF-9D2D-4AC2-B8F7-22AFB9D97DCA}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{9f424704-7da8-4ec5-b9c7-2b2e2a83d158}|Atlantis.RawMetrics.DAL.dll;{ba0cd172-6f92-4299-b553-0ff974128b44}|Atlantis.RawMetrics.Service.dll;"
+		ProjectReferences = "{ba0cd172-6f92-4299-b553-0ff974128b44}|Atlantis.RawMetrics.Service.dll;{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}|Atlantis.RawMetrics.DAL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_50563"
 		Debug.AspNetCompiler.PhysicalPath = "Atlantis.RawMetrics.API\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50563\"
