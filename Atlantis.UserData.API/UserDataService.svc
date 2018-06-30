@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Atlantis.UserData.Service.UserDataService" CodeBehind="Atlantis.UserData.Service.UserDataService.cs" %>

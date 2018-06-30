@@ -1,14 +1,14 @@
 ﻿using Atlantis.RawMetrics.DAL;
 using Atlantis.RawMetrics.DAL.Models;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using System.Text;
 
-namespace RawMetrics.API
+namespace Atlantis.RawMetrics.Service
 {
     public class RawMetricsService : IRawMetricsService
     {
@@ -31,7 +31,7 @@ namespace RawMetrics.API
                 throw new WebFaultException<string>("DeviceId cannot be empty.", System.Net.HttpStatusCode.BadRequest);
             if (amount > 0)
             {
-                var results = _dao.GetMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date).Ticks).Take(amount);
+                var results = _dao.GetMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date).Ticks).Take(amount).OrderByDescending(x => x.Date);
                 return results.ToList();
             }
             return new List<RawMetric>();
