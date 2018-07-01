@@ -16,7 +16,7 @@ namespace Atlantis.BackOffice.Service
         [WebInvoke(
             Method = "POST",
             UriTemplate = "/login",
-            BodyStyle = WebMessageBodyStyle.Bare,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json
         )]
@@ -46,7 +46,7 @@ namespace Atlantis.BackOffice.Service
         [WebInvoke(
             Method = "POST",
             UriTemplate = "/linkdevice",
-            BodyStyle = WebMessageBodyStyle.Bare,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json
         )]

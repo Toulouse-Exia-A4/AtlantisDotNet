@@ -102,6 +102,29 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.BackOffice.Service
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.BackOffice.Service.Tests", "Atlantis.BackOffice.Service.Tests\Atlantis.BackOffice.Service.Tests.csproj", "{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.BackOffice.API", "Atlantis.BackOffice.API\", "{13612F72-048E-4F73-B7D7-623FF44C2A1A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		ProjectReferences = "{cb3f54ad-c093-4092-a954-3ee755cb7cab}|Atlantis.BackOffice.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54939"
+		Debug.AspNetCompiler.PhysicalPath = "Atlantis.BackOffice.API\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54939\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54939"
+		Release.AspNetCompiler.PhysicalPath = "Atlantis.BackOffice.API\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54939\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "54939"
+		SlnRelativePath = "Atlantis.BackOffice.API\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +191,10 @@ Global
 		{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
