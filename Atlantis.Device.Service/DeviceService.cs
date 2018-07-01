@@ -56,13 +56,9 @@ namespace Atlantis.Device.Service
 
                 DeviceServiceHelper.SendMetricToQueue(deviceMetricModel);
             }
-            catch(WebFaultException)
+            catch(Exception)
             {
                 throw;
-            }
-            catch(Exception ex)
-            {
-                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
     }

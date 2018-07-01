@@ -24,6 +24,11 @@ namespace Atlantis.BackOffice.Service
             get { return new DeviceDAO(_context); }
         }
 
+        public virtual AdminDAO AdminDAO
+        {
+            get { return new AdminDAO(_context); }
+        }
+
         public BackOfficeService()
         {
             _context = new UserDataContext();
@@ -93,14 +98,14 @@ namespace Atlantis.BackOffice.Service
             }
         }
 
-        public bool LinkDeviceToUser(string userId, string deviceId)
+        public void LinkDeviceToUser(string userId, string deviceId)
         {
             try
             {
                 if (userId == null || userId.Length == 0 || deviceId == null || deviceId.Length == 0)
                     throw new WebFaultException<string>("LinkDeviceToUser missing parameter.", HttpStatusCode.BadRequest);
 
-                return true;
+                DeviceDAO.AddDeviceOwner(deviceId, userId);
             }
             catch(WebFaultException)
             {
@@ -114,7 +119,21 @@ namespace Atlantis.BackOffice.Service
 
         public bool Login(string username, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var admin = AdminDAO.Find(username);
+                if(admin == null)
+                    throw new WebFaultException<string>("Incorrect username.", HttpStatusCode.BadRequest);
+
+                if (admin.Password != BackOfficeHelper.GetMD5Hash(password))
+                    return false;
+                else
+                    return true;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }

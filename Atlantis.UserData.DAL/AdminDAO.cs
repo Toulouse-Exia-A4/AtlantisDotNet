@@ -39,7 +39,6 @@ namespace Atlantis.UserData.DAL
             if(entity.AdminId == null || entity.Password == null || entity.AdminId.Length == 0 || entity.Password.Length == 0)
                 throw new Exception("Identifier and Password cannot be empty");
 
-
             try
             {
                 if (_context.Admin.FirstOrDefault(x => x.AdminId == entity.AdminId) == null)
@@ -143,6 +142,19 @@ namespace Atlantis.UserData.DAL
                 return oldAdmin;
             }
             catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public virtual Admin Find(string username)
+        {
+            try
+            {
+                var adminUser = _context.Admin.Where(x => x.AdminId == username).FirstOrDefault();
+                return adminUser;
+            }
+            catch(Exception)
             {
                 throw;
             }

@@ -140,7 +140,7 @@ namespace Atlantis.UserData.DAL
             }
         }
 
-        public virtual Device AddDeviceOwner(string deviceId, string userId)
+        public virtual void AddDeviceOwner(string deviceId, string userId)
         {
             try
             {
@@ -154,7 +154,6 @@ namespace Atlantis.UserData.DAL
 
                     device.UserId = user.Id;
                     _context.SaveChanges();
-                    return device;
                 }
                 else
                 {

@@ -14,7 +14,7 @@ namespace Atlantis.Device.Service.Tests
         {
             var context = new Mock<UserDataContext>();
             var svc = new Mock<DeviceService>(context.Object);
-
+            svc.Setup(x => x.DeviceServiceHelper).Returns(new DeviceServiceHelpers());
             DeviceMetricModel invalidModel = new DeviceMetricModel()
             {
                 DeviceId = null
@@ -37,6 +37,7 @@ namespace Atlantis.Device.Service.Tests
             var svc = new Mock<DeviceService>(context.Object);
             svc.Setup(x => x.DeviceDAO).Returns(deviceDao.Object);
             svc.Setup(x => x.DeviceTypeDAO).Returns(deviceTypeDao.Object);
+            svc.Setup(x => x.DeviceServiceHelper).Returns(new DeviceServiceHelpers());
 
             svc.Object.AddRawMetric(new DeviceMetricModel() { DeviceId = "Test", DeviceType = "type", MetricValue = "value" });
             deviceDao.Verify(d => d.Add(It.IsAny<UserData.DAL.Device>()), Times.Once());
