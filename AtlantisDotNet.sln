@@ -98,6 +98,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.Device.API", "Atla
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.BackOffice.Service", "Atlantis.BackOffice.Service\Atlantis.BackOffice.Service.csproj", "{CB3F54AD-C093-4092-A954-3EE755CB7CAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -156,6 +158,10 @@ Global
 		{2D19556A-6787-474B-BEB6-B53105C246DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D19556A-6787-474B-BEB6-B53105C246DE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{2D19556A-6787-474B-BEB6-B53105C246DE}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

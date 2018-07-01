@@ -139,5 +139,17 @@ namespace Atlantis.UserData.DAL
                 throw;
             }
         }
+
+        public virtual Device AddDeviceOwner(string deviceId, string userId)
+        {
+            try
+            {
+
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
     }
 }
