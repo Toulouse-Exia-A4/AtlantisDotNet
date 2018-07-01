@@ -55,22 +55,26 @@ namespace Atlantis.UserData.Service
                 var user = UserDAO.GetByUserId(userId);
                 if (user != null)
                 {
-                    var devices = UserDAO.GetUserDevices(user);
-
                     UserModel userModel = new UserModel() { UserId = user.UserId, Firstname = user.Firstname, Lastname = user.Lastname };
 
-                    List<DeviceModel> deviceModels = new List<DeviceModel>();
+                    var devices = UserDAO.GetUserDevices(user);
 
-                    foreach (var device in devices)
+                    if(devices != null)
                     {
-                        deviceModels.Add(new DeviceModel()
-                        {
-                            DeviceId = device.DeviceId,
-                            DeviceType = new DeviceTypeModel() { Type = device.DeviceType.Type, Unit = device.DeviceType.Unit }
-                        });
-                    }
+                        List<DeviceModel> deviceModels = new List<DeviceModel>();
 
-                    userModel.Devices = deviceModels;
+                        foreach (var device in devices)
+                        {
+                            deviceModels.Add(new DeviceModel()
+                            {
+                                DeviceId = device.DeviceId,
+                                DeviceType = new DeviceTypeModel() { Type = device.DeviceType.Type, Unit = device.DeviceType.Unit }
+                            });
+                        }
+
+                        userModel.Devices = deviceModels;
+                    }
+                    
                     return userModel;
                 }
                 return null;

@@ -22,7 +22,5 @@ namespace Atlantis.RawMetrics.DAL.Models
 
         [BsonElement("value")]
         public string Value { get; set; }
-
-
     }
 }

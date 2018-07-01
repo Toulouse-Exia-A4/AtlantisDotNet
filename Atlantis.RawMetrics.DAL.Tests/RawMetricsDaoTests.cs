@@ -156,5 +156,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
             var ex = Assert.Throws<Exception>(() => dao.GetMetricsInPeriodASC(2, 1));
             Assert.AreEqual("Error in parameters: fromDate is greater than toDate.", ex.Message);
         }
+
+
     }
 }

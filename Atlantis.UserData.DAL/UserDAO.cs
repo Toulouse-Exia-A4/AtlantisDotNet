@@ -136,7 +136,7 @@ namespace Atlantis.UserData.DAL
             throw new Exception("User cannot be modified.");
         }
 
-        public ICollection<Device> GetUserDevices(User user)
+        public virtual ICollection<Device> GetUserDevices(User user)
         {
             try
             {

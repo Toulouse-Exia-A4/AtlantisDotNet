@@ -121,5 +121,20 @@ namespace Atlantis.RawMetrics.DAL
                 throw;
             }
         }
+
+        public async virtual Task<List<RawMetric>> GetNDeviceMetricsPriorDate(string deviceId, long date, int resultQuantity)
+        {
+            try
+            {
+                var filter = Builders<RawMetric>.Filter.Eq(x => x.DeviceId, deviceId);
+                var results = new List<RawMetric>();
+                await _context.RawMetrics.Find(filter).ForEachAsync(m => results.Add(m));
+                return results.ToList().Where(x => x.Date < date).OrderByDescending(x => x.Date).Take(resultQuantity).ToList();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
     }
 }

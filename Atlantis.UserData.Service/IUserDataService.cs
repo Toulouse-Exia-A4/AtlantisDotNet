@@ -26,7 +26,7 @@ namespace Atlantis.UserData.Service
         [WebInvoke(
         Method = "POST",
         UriTemplate = "/users",
-        BodyStyle = WebMessageBodyStyle.Bare,
+        BodyStyle = WebMessageBodyStyle.Wrapped,
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json
         )]

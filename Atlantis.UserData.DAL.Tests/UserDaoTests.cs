@@ -43,7 +43,7 @@ namespace Atlantis.UserData.DAL.Tests
 
         // Add
         [Test]
-        public void GivenExistingUserForCreationShouldThrowException()
+        public void GivenExistingUserForCreationShouldReturnNull()
         {
             var data = new List<User> { new User() { Id = 0, UserId = "XXXX" } }.AsQueryable();
 
@@ -52,9 +52,9 @@ namespace Atlantis.UserData.DAL.Tests
             mockContext.Setup(c => c.User).Returns(mockSet.Object);
 
             var dao = new UserDAO(mockContext.Object);
+            var result = dao.Add(new User() { UserId = "XXXX" });
 
-            var ex = Assert.Throws<Exception>(() => dao.Add(new User() { UserId = "XXXX" }));
-            Assert.AreEqual("User already registered.", ex.Message);
+            Assert.AreEqual(null, result);
         }
 
         // All()
