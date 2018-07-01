@@ -22,13 +22,6 @@ namespace CalcEngineService
             return response.Headers.Location;
         }
 
-        /*
-        static void Main()
-        {
-            RunAsync().GetAwaiter().GetResult();
-        }
-        */
-
         public static async Task RunAsync()
         {
             // Update port # in the following line.

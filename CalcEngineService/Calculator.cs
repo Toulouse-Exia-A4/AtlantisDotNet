@@ -101,6 +101,10 @@ namespace CalcEngineService
             calculatedMetric.Value = calcAverageValue(getRawMetricsValues(rawMetricsToCalculate));
             calculatedMetric.DataType = "Average";
             calculatedMetrics.Add(calculatedMetric);
+            // median calculation
+            calculatedMetric.Value = calcMedianValue(getRawMetricsValues(rawMetricsToCalculate));
+            calculatedMetric.DataType = "Median";
+            calculatedMetrics.Add(calculatedMetric);
             return calculatedMetrics;
         }
 
