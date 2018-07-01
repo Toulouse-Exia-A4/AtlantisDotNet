@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Atlantis.Device.Service.DeviceService" CodeBehind="Atlantis.Device.Service.DeviceService.cs" %>
