@@ -144,7 +144,22 @@ namespace Atlantis.UserData.DAL
         {
             try
             {
+                var device = _context.Device.FirstOrDefault(x => x.DeviceId == deviceId);
+                var user = _context.User.FirstOrDefault(x => x.UserId == userId);
 
+                if (device != null && user != null)
+                {
+                    if (device.UserId.HasValue)
+                        throw new Exception("Device already have a owner.");
+
+                    device.UserId = user.Id;
+                    _context.SaveChanges();
+                    return device;
+                }
+                else
+                {
+                    throw new Exception("User or Device not found.");
+                }
             }
             catch(Exception)
             {

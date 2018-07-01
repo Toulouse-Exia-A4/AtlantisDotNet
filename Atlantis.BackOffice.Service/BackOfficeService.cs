@@ -100,7 +100,7 @@ namespace Atlantis.BackOffice.Service
                 if (userId == null || userId.Length == 0 || deviceId == null || deviceId.Length == 0)
                     throw new WebFaultException<string>("LinkDeviceToUser missing parameter.", HttpStatusCode.BadRequest);
 
-                UserDAO
+                return true;
             }
             catch(WebFaultException)
             {
