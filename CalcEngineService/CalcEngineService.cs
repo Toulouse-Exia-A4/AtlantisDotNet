@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Atlantis.RawMetrics.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,9 +30,15 @@ namespace CalcEngineService
 
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("Calc Engine started", EventLogEntryType.Information);
-            MyHttpClient.RunAsync().GetAwaiter().GetResult();
-            eventLog1.WriteEntry("Calc Engine finished working", EventLogEntryType.Information);
+            try
+            {
+                eventLog1.WriteEntry("Calc Engine started !", EventLogEntryType.Information);
+                MyHttpClient.RunAsync().GetAwaiter().GetResult();
+            }
+            catch (Exception e) {
+                eventLog1.WriteEntry(e.Message);
+                eventLog1.WriteEntry(e.StackTrace);
+            }
         }
 
         protected override void OnStop()
@@ -40,3 +47,5 @@ namespace CalcEngineService
         }
     }
 }
+
+

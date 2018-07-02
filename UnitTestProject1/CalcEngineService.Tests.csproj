@@ -53,6 +53,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Atlantis.RawMetrics.DAL\Atlantis.RawMetrics.DAL.csproj">
+      <Project>{9f424704-7da8-4ec5-b9c7-2b2e2a83d158}</Project>
+      <Name>Atlantis.RawMetrics.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CalcEngineService\CalcEngineService.csproj">
       <Project>{fe9fa1d7-ef0e-453b-aa69-8b70b880c21e}</Project>
       <Name>CalcEngineService</Name>

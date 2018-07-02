@@ -42,52 +42,49 @@ namespace CalcEngineService
             return values.Min();
         }
 
-        public List<CalculatedMetricsModel> generateCalculatedMetrics()
+        public async Task<List<CalculatedMetricsModel>> generateCalculatedMetrics()
         {
-            RawMetricsContext context = new RawMetricsContext();
+            RawMetricsContext context = new RawMetricsContext(true);
             RawMetricsDAO rawMetricsDAO = new RawMetricsDAO(context);
+            List<RawMetric> rawMetrics = await rawMetricsDAO.GetMetricsInPeriodASC(0, 636657407000000000l); //tochange
+                //(new DateTime(2018, 06, 20).Ticks, new DateTime(2018, 06, 30).Ticks);
 
-            // TODO retrieve Model with DAL (stamp)
-            /*
-            RawMetric rawMetric = new RawMetric();
-            rawMetric.DeviceId = "1";
-            rawMetric.Date = new DateTime(2018, 06, 27);
-            rawMetric.Value = "30";
-            rawMetricsDAO.Create(rawMetric);
-            
-            rawMetric.Date = new DateTime(2018, 06, 28);
-            rawMetric.Value = "28";
-            rawMetricsDAO.Create(rawMetric);
-            */
-            
-            // Calculation
-            return Calculation(rawMetricsDAO.GetAllOrderedByDeviceId());
+            return Calculation(rawMetrics);
         }
 
         public List<CalculatedMetricsModel> Calculation(List<RawMetric> rawMetrics)
         {
             List<CalculatedMetricsModel> calculatedMetrics = new List<CalculatedMetricsModel>();
             CalculatedMetricsModel calculatedMetric = new CalculatedMetricsModel();
-            String deviceId = rawMetrics[0].DeviceId;
+            //String deviceId = rawMetrics[0].DeviceId;
             List<RawMetric> rawMetricsToCalculate = new List<RawMetric>(); // List of the values we want to make calculations on
-            for(int i = 0 ; i < rawMetrics.Count() ; i++)
+            if (!(rawMetrics.Count <= 1))
             {
-                rawMetricsToCalculate.Add(rawMetrics[i]);
-                i++;
-                if(rawMetrics[i].DeviceId.Equals(rawMetrics[i+1].DeviceId))
+                for (int i = 0; i < rawMetrics.Count(); i++)
                 {
-                    rawMetricsToCalculate.Add(rawMetrics[i+1]);
-                } else
-                {
-                    // do calculation
-                    rawMetricsToCalculate.Add(rawMetrics[i+1]);
-                    calculatedMetrics = makeRawDevicesCalculation(calculatedMetrics, rawMetricsToCalculate);
-                    
-                    // TODO continue to fill calculatedMetric + add a way to know the date range
+                    if (i == rawMetrics.Count() - 1) // we arrived on the last metric of the list
+                    {
+                        
+                    }
+                    else
+                    {
+                        if (rawMetrics[i].DeviceId.Equals(rawMetrics[i + 1].DeviceId))
+                        {
+                            rawMetricsToCalculate.Add(rawMetrics[i]);
+                        }
+                        else
+                        {
+                            // do calculation
+                            rawMetricsToCalculate.Add(rawMetrics[i]);
+                            calculatedMetrics = makeRawDevicesCalculation(calculatedMetrics, rawMetricsToCalculate);
+                            rawMetricsToCalculate = new List<RawMetric>();
+                            // TODO continue to fill calculatedMetric + add a way to know the date range
 
+                        }
+                    }
                 }
             }
-            return new List<CalculatedMetricsModel>();
+            return calculatedMetrics;
         }
 
         public List<CalculatedMetricsModel> makeRawDevicesCalculation(List<CalculatedMetricsModel> calculatedMetrics, List<RawMetric> rawMetricsToCalculate)
@@ -118,27 +115,27 @@ namespace CalcEngineService
             return values;
         }
 
-        public int metricsLowestDate(List<RawMetric> rawMetrics)
+        public long metricsLowestDate(List<RawMetric> rawMetrics)
         {
-            int date = 0;
+            long date = 0;
             foreach (RawMetric rawMetric in rawMetrics)
             {
-                if (rawMetric.Date.Millisecond < date || date == 0)
+                if (rawMetric.Date < date || date == 0)
                 {
-                    date = rawMetric.Date.Millisecond;
+                    date = rawMetric.Date;
                 }
             }
             return date;
         }
 
-        public int metricsHighestDate(List<RawMetric> rawMetrics)
+        public long metricsHighestDate(List<RawMetric> rawMetrics)
         {
-            int date = 0;
+            long date = 0;
             foreach (RawMetric rawMetric in rawMetrics)
             {
-                if (rawMetric.Date.Millisecond > date)
+                if (rawMetric.Date > date)
                 {
-                    date = rawMetric.Date.Millisecond;
+                    date = rawMetric.Date;
                 }
             }
             return date;

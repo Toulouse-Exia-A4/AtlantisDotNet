@@ -106,15 +106,18 @@ namespace Atlantis.RawMetrics.DAL
             }
         }
 
-        public List<RawMetric> GetMetricsInPeriodASC(long fromDate, long toDate)
+        public async Task<List<RawMetric>> GetMetricsInPeriodASC(long fromDate, long toDate)
         {
             try
             {
                 if (fromDate > toDate)
                     throw new Exception("Error in parameters: fromDate is greater than toDate.");
 
-                var res = _context.RawMetrics.FindSync(x => x.Date >= fromDate && x.Date <= toDate);
-                return res != null ? res.ToList().OrderBy(x => x.DeviceId).ToList() : new List<RawMetric>();
+                var results = new List<RawMetric>();
+
+                await _context.RawMetrics.FindSync(x => x.Date >= fromDate && x.Date <= toDate).ForEachAsync(x => results.Add(x));
+
+                return results.OrderBy(x => x.DeviceId).ToList();
             }
             catch (Exception)
             {

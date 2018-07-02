@@ -9,8 +9,8 @@ namespace CalcEngineService
     public class CalculatedMetricsModel
     {
         public String DeviceId { get; set; }
-        public int DateTimeStart { get; set; }
-        public int DateTimeEnd { get; set; }
+        public long DateTimeStart { get; set; }
+        public long DateTimeEnd { get; set; }
         public double Value { get; set; }
         public string DataType { get; set; }
     }

@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using CalcEngineService;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
 
 namespace CalcEngineService
 {
@@ -12,16 +16,6 @@ namespace CalcEngineService
     {
         static HttpClient client = new HttpClient();
         
-        static async Task<Uri> CreateCalculatedMetric(List<CalculatedMetricsModel> calculatedMetricsModels)
-        {
-            HttpResponseMessage response = await client.PostAsJsonAsync(
-                "api/calculatedMetrics", calculatedMetricsModels);
-            response.EnsureSuccessStatusCode();
-
-            // return URI of the created resource.
-            return response.Headers.Location;
-        }
-
         public static async Task RunAsync()
         {
             // Update port # in the following line.
@@ -29,19 +23,37 @@ namespace CalcEngineService
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
+                        
             try
             {
                 // Create the calculated metric
                 Calculator calc = new Calculator();
-                List<CalculatedMetricsModel> calculatedMetrics = calc.generateCalculatedMetrics();
+                var json = new JavaScriptSerializer().Serialize(await calc.generateCalculatedMetrics());
                 
-                var url = await CreateCalculatedMetric(calculatedMetrics);
-                Console.WriteLine($"Created at {url}");
+                /* DEBUG : what is inside the json */
+                var eventLog1 = new EventLog();
+                if (!System.Diagnostics.EventLog.SourceExists("MySource"))
+                {
+                    System.Diagnostics.EventLog.CreateEventSource(
+                        "MySource", "MyNewLog");
+                }
+                eventLog1.Source = "MySource";
+                eventLog1.Log = "MyNewLog";
+                eventLog1.WriteEntry(json.ToString());
+
+                await client.PostAsync(client.BaseAddress, new StringContent(json.ToString(), Encoding.UTF8, "application/json"));
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                var eventLog1 = new EventLog();
+                if (!System.Diagnostics.EventLog.SourceExists("MySource"))
+                {
+                    System.Diagnostics.EventLog.CreateEventSource(
+                        "MySource", "MyNewLog");
+                }
+                eventLog1.Source = "MySource";
+                eventLog1.Log = "MyNewLog";
+                eventLog1.WriteEntry(e.Message);
             }
 
             Console.ReadLine();
