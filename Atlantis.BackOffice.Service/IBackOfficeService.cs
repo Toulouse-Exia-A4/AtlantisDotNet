@@ -50,6 +50,6 @@ namespace Atlantis.BackOffice.Service
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json
         )]
-        void LinkDeviceToUser(string userId, string deviceId);
+        void LinkDeviceToUser(string userId, int deviceId);
     }
 }

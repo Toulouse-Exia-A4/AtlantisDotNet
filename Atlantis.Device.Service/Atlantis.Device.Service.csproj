@@ -35,7 +35,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -43,18 +47,26 @@
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebLogic.Messaging">
+      <HintPath>..\lib\WebLogic.Messaging.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DeviceMetricModel.cs" />
+    <Compile Include="DeviceModel.cs" />
     <Compile Include="DeviceService.cs" />
-    <Compile Include="DeviceServiceHelpers.cs" />
     <Compile Include="IDeviceService.cs" />
+    <Compile Include="MetricModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Atlantis.RawMetrics.DAL\Atlantis.RawMetrics.DAL.csproj">
+      <Project>{9f424704-7da8-4ec5-b9c7-2b2e2a83d158}</Project>
+      <Name>Atlantis.RawMetrics.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Atlantis.UserData.DAL\Atlantis.UserData.DAL.csproj">
       <Project>{628588f5-a876-4770-8375-0e58ead4bcbb}</Project>
       <Name>Atlantis.UserData.DAL</Name>

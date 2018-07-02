@@ -34,10 +34,10 @@ namespace Atlantis.UserData.DAL.Tests
             var mockSet = SetupDbSet(data);
 
             mockContext.Setup(c => c.Device).Returns(mockSet.Object);
-            mockContext.Setup(c => c.DeviceType.Find(0)).Returns(new DeviceType() { Id = 0, Type = "Temperature" });
+            mockContext.Setup(c => c.DeviceType.Find(0)).Returns(new DeviceType() { Id = 1, Type = "Temperature" });
 
             var dao = new DeviceDAO(mockContext.Object);
-            var newUserType = dao.Add(new Device() { DeviceId = "AAAAAA", DeviceTypeId = 0 });
+            var newUserType = dao.Add(new Device() { Id = 1, DeviceTypeId = 1 });
 
             mockSet.Verify(m => m.Add(It.IsAny<Device>()), Times.Once());
             mockContext.Verify(m => m.SaveChanges(), Times.Once());
@@ -52,12 +52,12 @@ namespace Atlantis.UserData.DAL.Tests
             var mockSet = SetupDbSet(data);
 
             mockContext.Setup(c => c.Device).Returns(mockSet.Object);
-            mockContext.Setup(c => c.DeviceType.Find(0)).Returns(new DeviceType() { Id = 0, Type = "Temperature" });
+            mockContext.Setup(c => c.DeviceType.Find(0)).Returns(new DeviceType() { Id = 1, Type = "Temperature" });
             mockContext.Setup(c => c.User.Find(0)).Returns(new User() { Id = 0, UserId = "ABCDEF" });
-            mockSet.Setup(c => c.Add(It.IsAny<Device>())).Returns(new Device() { DeviceId = "AAAAAA", DeviceTypeId = 0, UserId = 0 });
+            mockSet.Setup(c => c.Add(It.IsAny<Device>())).Returns(new Device() { Id = 1, DeviceTypeId = 1, UserId = 1 });
 
             var dao = new DeviceDAO(mockContext.Object);
-            var newUserType = dao.Add(new Device() { DeviceId = "AAAAAA", DeviceTypeId = 0, UserId = 0 });
+            var newUserType = dao.Add(new Device() { DeviceTypeId = 1, UserId = 1 });
 
             mockSet.Verify(m => m.Add(It.IsAny<Device>()), Times.Once());
             mockContext.Verify(m => m.SaveChanges(), Times.Once());
@@ -76,7 +76,7 @@ namespace Atlantis.UserData.DAL.Tests
 
             var dao = new DeviceDAO(mockContext.Object);
 
-            var ex = Assert.Throws<Exception>(() => dao.Add(new Device() { DeviceId = "AAAAAA", DeviceTypeId = 0 }));
+            var ex = Assert.Throws<Exception>(() => dao.Add(new Device() { DeviceTypeId = 0 }));
             Assert.AreEqual("Device.TypeId doesn't exist.", ex.Message);
         }
 
@@ -85,8 +85,8 @@ namespace Atlantis.UserData.DAL.Tests
         {
             var data = new List<Device>
             {
-                new Device() {DeviceId = "A"},
-                new Device() {DeviceId = "B"}
+                new Device() {Name = "A"},
+                new Device() {Name = "B"}
             }.AsQueryable();
 
             var mockContext = new Mock<UserDataContext>();
@@ -106,8 +106,8 @@ namespace Atlantis.UserData.DAL.Tests
         [Test]
         public void GivenIdShouldReturnObject()
         {
-            Device d1 = new Device() { Id = 0, DeviceId = "A" };
-            Device d2 = new Device() { Id = 1, DeviceId = "B" };
+            Device d1 = new Device() { Id = 0, Name = "A" };
+            Device d2 = new Device() { Id = 1, Name = "B" };
 
             var mockContext = new Mock<UserDataContext>();
 
@@ -127,7 +127,7 @@ namespace Atlantis.UserData.DAL.Tests
         [Test]
         public void GivenIdShouldRemoveFromDb()
         {
-            Device d = new Device() { Id = 0, DeviceId = "A" };
+            Device d = new Device() { Id = 0, Name = "A" };
 
             var mockContext = new Mock<UserDataContext>();
             mockContext.Setup(c => c.Device.Find(0)).Returns(d);
@@ -141,8 +141,8 @@ namespace Atlantis.UserData.DAL.Tests
         [Test]
         public void GivenValidObjectShouldUpdateInDb()
         {
-            Device d = new Device() { Id = 0, DeviceId = "A" };
-            Device dUpd = new Device() { Id = 0, DeviceId = "A", UserId = 0 };
+            Device d = new Device() { Id = 0, Name = "A" };
+            Device dUpd = new Device() { Id = 0, Name = "A", UserId = 0 };
 
             var mockContext = new Mock<UserDataContext>();
             mockContext.Setup(c => c.Device.Find(0)).Returns(d);
@@ -150,7 +150,7 @@ namespace Atlantis.UserData.DAL.Tests
             var dao = new DeviceDAO(mockContext.Object);
             var updatedObj = dao.Update(dUpd);
 
-            Assert.AreEqual("A", updatedObj.DeviceId);
+            Assert.AreEqual("A", updatedObj.Name);
             Assert.AreEqual(0, updatedObj.UserId);
             mockContext.Verify(m => m.SaveChanges(), Times.Once());
         }
@@ -160,9 +160,9 @@ namespace Atlantis.UserData.DAL.Tests
         {
             var data = new List<Device>
             {
-                new Device() {Id = 0, DeviceId = "A", DeviceTypeId = 0},
-                new Device() {Id = 1, DeviceId = "B", DeviceTypeId = 1},
-                new Device() {Id = 2, DeviceId = "C", DeviceTypeId = 0}
+                new Device() {Id = 0, Name = "A", DeviceTypeId = 0},
+                new Device() {Id = 1, Name = "B", DeviceTypeId = 1},
+                new Device() {Id = 2, Name = "C", DeviceTypeId = 0}
             }.AsQueryable();
 
             var mockContext = new Mock<UserDataContext>();
@@ -174,8 +174,8 @@ namespace Atlantis.UserData.DAL.Tests
             var results = dao.GetAllDevicesOfType(new DeviceType() { Id = 0 });
 
             Assert.AreEqual(2, results.Count);
-            Assert.AreEqual("A", results[0].DeviceId);
-            Assert.AreEqual("C", results[1].DeviceId);
+            Assert.AreEqual("A", results[0].Name);
+            Assert.AreEqual("C", results[1].Name);
         }
 
         [Test]
@@ -183,9 +183,9 @@ namespace Atlantis.UserData.DAL.Tests
         {
             var data = new List<Device>
             {
-                new Device() {Id = 0, DeviceId = "A", UserId = 0},
-                new Device() {Id = 1, DeviceId = "B", UserId = 1},
-                new Device() {Id = 2, DeviceId = "C", UserId = 0}
+                new Device() {Id = 0, Name = "A", UserId = 0},
+                new Device() {Id = 1, Name = "B", UserId = 1},
+                new Device() {Id = 2, Name = "C", UserId = 0}
             }.AsQueryable();
 
             var mockContext = new Mock<UserDataContext>();
@@ -196,7 +196,7 @@ namespace Atlantis.UserData.DAL.Tests
             var dao = new DeviceDAO(mockContext.Object);
             var result = dao.GetByName("A");
 
-            Assert.AreEqual("A", result.DeviceId);
+            Assert.AreEqual("A", result.Name);
         }
     }
 }

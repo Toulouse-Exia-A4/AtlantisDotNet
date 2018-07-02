@@ -41,7 +41,7 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.User.ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -53,7 +53,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.User.ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -89,7 +89,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.User.FindAsync(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

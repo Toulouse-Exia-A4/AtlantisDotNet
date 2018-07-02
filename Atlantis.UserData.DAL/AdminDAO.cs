@@ -58,7 +58,7 @@ namespace Atlantis.UserData.DAL
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -70,7 +70,7 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.Admin.ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -82,7 +82,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.Admin.ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

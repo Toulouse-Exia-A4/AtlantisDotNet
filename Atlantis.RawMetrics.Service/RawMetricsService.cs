@@ -27,20 +27,24 @@ namespace Atlantis.RawMetrics.Service
             _dao = dao;
         }
 
-        public async Task<List<RawMetricModel>> GetRawMetricsFromDevice(string deviceId, long date, int amount)
+        public List<RawMetricModel> GetRawMetricsFromDevice(string deviceId, string date, string amount)
         {
             try
             {
-                if (deviceId == null || deviceId.Length == 0)
-                    throw new WebFaultException<string>("DeviceId cannot be empty.", HttpStatusCode.BadRequest);
+                if (deviceId.Length == 0 || date.Length == 0)
+                    throw new Exception("DeviceId / Date cannot be empty.");
 
-                if (amount > 0)
+                int _deviceId = int.Parse(deviceId);
+                long _date = long.Parse(date);
+                int _amount = int.Parse(amount);
+
+                if (_amount > 0)
                 {
-                    var results = await _dao.GetNDeviceMetricsPriorDate(deviceId, date, amount);
+                    var results = _dao.GetNDeviceMetricsPriorDate(_deviceId, _date, _amount);
 
                     List<RawMetricModel> rawMetrics = new List<RawMetricModel>();
-                    
-                    if(results != null)
+
+                    if (results != null)
                     {
                         foreach (var result in results)
                         {
@@ -52,10 +56,6 @@ namespace Atlantis.RawMetrics.Service
                 }
 
                 return new List<RawMetricModel>();
-            }
-            catch (WebFaultException)
-            {
-                throw;
             }
             catch (Exception ex)
             {

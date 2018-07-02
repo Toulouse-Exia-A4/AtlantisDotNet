@@ -5,16 +5,16 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Atlantis.RawMetrics.Service
+namespace Atlantis.Device.Service
 {
     [DataContract]
-    public class RawMetricModel
+    public class MetricModel
     {
         [DataMember(Name = "deviceId")]
         public int DeviceId { get; set; }
 
         [DataMember(Name = "date")]
-        public long Date { get; set; }
+        public string Date { get; set; }
 
         [DataMember(Name = "value")]
         public string Value { get; set; }
