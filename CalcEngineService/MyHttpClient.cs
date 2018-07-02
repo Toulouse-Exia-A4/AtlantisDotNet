@@ -9,6 +9,7 @@ using CalcEngineService;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Web.Script.Serialization;
+using System.Configuration;
 
 namespace CalcEngineService
 {
@@ -19,7 +20,7 @@ namespace CalcEngineService
         public static async Task RunAsync()
         {
             // Update port # in the following line.
-            client.BaseAddress = new Uri("http://10.131.128.82:8080/AtlantisJEE/api/calc");
+            client.BaseAddress = new Uri(ConfigurationManager.AppSettings["URICalcAPI"]);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));

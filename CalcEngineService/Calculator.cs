@@ -45,10 +45,22 @@ namespace CalcEngineService
         public async Task<List<CalculatedMetricsModel>> generateCalculatedMetrics()
         {
             RawMetricsContext context = new RawMetricsContext(true);
-            RawMetricsDAO rawMetricsDAO = new RawMetricsDAO(context);
-            List<RawMetric> rawMetrics = await rawMetricsDAO.GetMetricsInPeriodASC(0, 636657407000000000l); //tochange
-                //(new DateTime(2018, 06, 20).Ticks, new DateTime(2018, 06, 30).Ticks);
+            RawMetricsDAO rawMetricsDAO = new RawMetricsDAO(context);            
 
+            // If we are on monday, we look for the rawdata of the week
+            List<RawMetric> rawMetrics = new List<RawMetric>();
+            // Otherwise, we look for  the rawdata of the previous 24h
+            DateTime dateOfTheDay = new DateTime();
+            if (dateOfTheDay.DayOfWeek == DayOfWeek.Monday)
+            {
+                dateOfTheDay = DateTime.Now;
+                rawMetrics =
+                await rawMetricsDAO.GetMetricsInPeriodASC(DateTimeToUnixLong(dateOfTheDay.AddDays(-7)), DateTimeToUnixLong(dateOfTheDay));
+            } else
+            {
+                rawMetrics =
+                await rawMetricsDAO.GetMetricsInPeriodASC(DateTimeToUnixLong(dateOfTheDay.AddDays(-1)), DateTimeToUnixLong(dateOfTheDay));
+            }
             return Calculation(rawMetrics);
         }
 
@@ -56,18 +68,13 @@ namespace CalcEngineService
         {
             List<CalculatedMetricsModel> calculatedMetrics = new List<CalculatedMetricsModel>();
             CalculatedMetricsModel calculatedMetric = new CalculatedMetricsModel();
-            //String deviceId = rawMetrics[0].DeviceId;
             List<RawMetric> rawMetricsToCalculate = new List<RawMetric>(); // List of the values we want to make calculations on
             if (!(rawMetrics.Count <= 1))
             {
                 for (int i = 0; i < rawMetrics.Count(); i++)
-                {
-                    if (i == rawMetrics.Count() - 1) // we arrived on the last metric of the list
-                    {
-                        
-                    }
-                    else
-                    {
+                {                    
+                    if (i != (rawMetrics.Count() - 1)) {
+                        // we also check here if we're not on the last item of the list
                         if (rawMetrics[i].DeviceId.Equals(rawMetrics[i + 1].DeviceId))
                         {
                             rawMetricsToCalculate.Add(rawMetrics[i]);
@@ -78,9 +85,13 @@ namespace CalcEngineService
                             rawMetricsToCalculate.Add(rawMetrics[i]);
                             calculatedMetrics = makeRawDevicesCalculation(calculatedMetrics, rawMetricsToCalculate);
                             rawMetricsToCalculate = new List<RawMetric>();
-                            // TODO continue to fill calculatedMetric + add a way to know the date range
-
                         }
+                    } else
+                    {
+                        // do calculation
+                        rawMetricsToCalculate.Add(rawMetrics[i]);
+                        calculatedMetrics = makeRawDevicesCalculation(calculatedMetrics, rawMetricsToCalculate);
+                        rawMetricsToCalculate = new List<RawMetric>();
                     }
                 }
             }
@@ -89,16 +100,19 @@ namespace CalcEngineService
 
         public List<CalculatedMetricsModel> makeRawDevicesCalculation(List<CalculatedMetricsModel> calculatedMetrics, List<RawMetric> rawMetricsToCalculate)
         {
-            // we add common values first
+            // average calculation
             CalculatedMetricsModel calculatedMetric = new CalculatedMetricsModel();
             calculatedMetric.DeviceId = rawMetricsToCalculate[0].DeviceId;
             calculatedMetric.DateTimeStart = metricsLowestDate(rawMetricsToCalculate);
             calculatedMetric.DateTimeEnd = metricsHighestDate(rawMetricsToCalculate);
-            // average calculation
             calculatedMetric.Value = calcAverageValue(getRawMetricsValues(rawMetricsToCalculate));
             calculatedMetric.DataType = "Average";
             calculatedMetrics.Add(calculatedMetric);
             // median calculation
+            calculatedMetric = new CalculatedMetricsModel();
+            calculatedMetric.DeviceId = rawMetricsToCalculate[0].DeviceId;
+            calculatedMetric.DateTimeStart = metricsLowestDate(rawMetricsToCalculate);
+            calculatedMetric.DateTimeEnd = metricsHighestDate(rawMetricsToCalculate);
             calculatedMetric.Value = calcMedianValue(getRawMetricsValues(rawMetricsToCalculate));
             calculatedMetric.DataType = "Median";
             calculatedMetrics.Add(calculatedMetric);
@@ -139,6 +153,11 @@ namespace CalcEngineService
                 }
             }
             return date;
+        }
+        public long DateTimeToUnixLong(DateTime dt)
+        {
+            var timespan = (dt - new DateTime(1970, 1, 1, 0, 0, 0));
+            return (long)timespan.TotalMilliseconds;
         }
     }
 }
