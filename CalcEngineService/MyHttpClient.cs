@@ -31,7 +31,7 @@ namespace CalcEngineService
                 Calculator calc = new Calculator();
                 var json = new JavaScriptSerializer().Serialize(await calc.generateCalculatedMetrics());
                 
-                /* DEBUG : what is inside the json */
+                /* We trace what is inside the json so we can retrieve what have been sent */
                 var eventLog1 = new EventLog();
                 if (!System.Diagnostics.EventLog.SourceExists("MySource"))
                 {

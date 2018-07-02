@@ -116,6 +116,22 @@ namespace CalcEngineService
             calculatedMetric.Value = calcMedianValue(getRawMetricsValues(rawMetricsToCalculate));
             calculatedMetric.DataType = "Median";
             calculatedMetrics.Add(calculatedMetric);
+            // highest value
+            calculatedMetric = new CalculatedMetricsModel();
+            calculatedMetric.DeviceId = rawMetricsToCalculate[0].DeviceId;
+            calculatedMetric.DateTimeStart = metricsLowestDate(rawMetricsToCalculate);
+            calculatedMetric.DateTimeEnd = metricsHighestDate(rawMetricsToCalculate);
+            calculatedMetric.Value = calcHighestValue(getRawMetricsValues(rawMetricsToCalculate));
+            calculatedMetric.DataType = "HighestValue";
+            calculatedMetrics.Add(calculatedMetric);
+            // lowest value
+            calculatedMetric = new CalculatedMetricsModel();
+            calculatedMetric.DeviceId = rawMetricsToCalculate[0].DeviceId;
+            calculatedMetric.DateTimeStart = metricsLowestDate(rawMetricsToCalculate);
+            calculatedMetric.DateTimeEnd = metricsHighestDate(rawMetricsToCalculate);
+            calculatedMetric.Value = calcLowestValue(getRawMetricsValues(rawMetricsToCalculate));
+            calculatedMetric.DataType = "LowestValue";
+            calculatedMetrics.Add(calculatedMetric);
             return calculatedMetrics;
         }
 
