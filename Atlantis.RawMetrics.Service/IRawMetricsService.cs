@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Atlantis.RawMetrics.Service
 {
@@ -21,6 +22,6 @@ namespace Atlantis.RawMetrics.Service
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json
         )]
-        List<RawMetric> GetRawMetricsFromDevice(string deviceId, long date, int amount);
+        Task<List<RawMetricModel>> GetRawMetricsFromDevice(string deviceId, long date, int amount);
     }
 }

@@ -84,7 +84,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.Config" />
     <None Include="packages.config" />
     <EntityDeploy Include="UserDataEDM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

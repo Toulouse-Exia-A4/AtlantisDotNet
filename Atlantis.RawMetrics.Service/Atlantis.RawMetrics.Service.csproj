@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="IRawMetricsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawMetricModel.cs" />
     <Compile Include="RawMetricsService.cs" />
   </ItemGroup>
   <ItemGroup>

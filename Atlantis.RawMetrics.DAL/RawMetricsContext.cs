@@ -15,7 +15,7 @@ namespace Atlantis.RawMetrics.DAL
         {
             get
             {
-                string collectionName = ConfigurationManager.AppSettings["RawMetricsCollection"];
+                string collectionName = ConfigurationManager.AppSettings["DbCollection"];
                 if (collectionName == null)
                     throw new Exception("RawMetricsCollection name is missing in config file.");
                 return database.GetCollection<RawMetric>(collectionName);

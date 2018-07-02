@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.ServiceModel.Web;
+using System.Threading.Tasks;
 using Atlantis.RawMetrics.DAL;
 using Atlantis.RawMetrics.DAL.Models;
 using MongoDB.Driver;
@@ -13,15 +15,13 @@ namespace Atlantis.RawMetrics.Service.Tests
     public class RawMetricsServiceTests
     {
         [Test]
-        public void GivenDeviceIdMaxDateAndResultAmountShouldReturnTwoMetrics()
+        public async Task GivenDeviceIdMaxDateAndResultAmountShouldReturnTwoMetrics()
         {
-            List<RawMetric> rawMetrics = new List<RawMetric>
+            var rawMetrics = Task.FromResult(new List<RawMetric>
             {
                 new RawMetric() { DeviceId = "aaaa-aaaa-aaaa", Date = new DateTime(2018, 1, 1).Ticks, Value = "12"},
-                new RawMetric() { DeviceId = "aaaa-aaaa-aaaa", Date = new DateTime(2018, 1, 2).Ticks, Value = "13"},
-                new RawMetric() { DeviceId = "aaaa-aaaa-aaaa", Date = new DateTime(2018, 1, 3).Ticks, Value = "14"},
-                new RawMetric() { DeviceId = "aaaa-aaaa-aaaa", Date = new DateTime(2018, 1, 4).Ticks, Value = "15"}
-            };
+                new RawMetric() { DeviceId = "aaaa-aaaa-aaaa", Date = new DateTime(2018, 1, 2).Ticks, Value = "13"}
+            });
 
             var mockContext = new Mock<RawMetricsContext>();
             var mockCollection = new Mock<IMongoCollection<RawMetric>>();
@@ -29,11 +29,11 @@ namespace Atlantis.RawMetrics.Service.Tests
             mockContext.Setup(x => x.RawMetrics).Returns(mockCollection.Object);
             var mockDao = new Mock<RawMetricsDAO>(mockContext.Object);
 
-            mockDao.Setup(x => x.GetMetricsForDevice(It.IsAny<string>())).Returns(rawMetrics);
+            mockDao.Setup(x => x.GetNDeviceMetricsPriorDate(It.IsAny<string>(), It.IsAny<long>(), It.IsAny<int>())).Returns(rawMetrics);
 
             var svc = new RawMetricsService(mockDao.Object);
 
-            var results = svc.GetRawMetricsFromDevice("aaaa-aaaa-aaaa", new DateTime(2018, 1, 3).Ticks, 2);
+            var results = await svc.GetRawMetricsFromDevice("aaaa-aaaa-aaaa", new DateTime(2018, 1, 3).Ticks, 2);
 
             Assert.AreEqual(2, results.Count);
         }
@@ -58,12 +58,12 @@ namespace Atlantis.RawMetrics.Service.Tests
             mockDao.Setup(x => x.GetMetricsForDevice(It.IsAny<string>())).Returns(rawMetrics);
 
             var svc = new RawMetricsService(mockDao.Object);
-
-            Assert.Throws<WebFaultException<string>>(() => svc.GetRawMetricsFromDevice("", new DateTime(2018, 1, 3).Ticks, 2));
+            
+            Assert.ThrowsAsync<WebFaultException<string>>(async () => await svc.GetRawMetricsFromDevice("", new DateTime(2018, 1, 3).Ticks, 2));
         }
 
         [Test]
-        public void GivenAmountLowerThanOneShouldReturnEmptyList()
+        public async Task GivenAmountLowerThanOneShouldReturnEmptyList()
         {
             List<RawMetric> rawMetrics = new List<RawMetric>
             {
@@ -79,7 +79,7 @@ namespace Atlantis.RawMetrics.Service.Tests
             mockDao.Setup(x => x.GetMetricsForDevice(It.IsAny<string>())).Returns(rawMetrics);
 
             var svc = new RawMetricsService(mockDao.Object);
-            var results = svc.GetRawMetricsFromDevice("aaaa-aaaa-aaaa", new DateTime(2018, 1, 3).Ticks, 0);
+            var results = await svc.GetRawMetricsFromDevice("aaaa-aaaa-aaaa", new DateTime(2018, 1, 3).Ticks, 0);
 
             Assert.AreEqual(0, results.Count);
         }

@@ -3,10 +3,12 @@ using Atlantis.RawMetrics.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Atlantis.RawMetrics.Service
 {
@@ -25,16 +27,40 @@ namespace Atlantis.RawMetrics.Service
             _dao = dao;
         }
 
-        public List<RawMetric> GetRawMetricsFromDevice(string deviceId, long date, int amount)
+        public async Task<List<RawMetricModel>> GetRawMetricsFromDevice(string deviceId, long date, int amount)
         {
-            if (deviceId == null || deviceId.Length == 0)
-                throw new WebFaultException<string>("DeviceId cannot be empty.", System.Net.HttpStatusCode.BadRequest);
-            if (amount > 0)
+            try
             {
-                var results = _dao.GetMetricsForDevice(deviceId).Where(m => m.Date < new DateTime(date).Ticks).Take(amount).OrderByDescending(x => x.Date);
-                return results.ToList();
+                if (deviceId == null || deviceId.Length == 0)
+                    throw new WebFaultException<string>("DeviceId cannot be empty.", HttpStatusCode.BadRequest);
+
+                if (amount > 0)
+                {
+                    var results = await _dao.GetNDeviceMetricsPriorDate(deviceId, date, amount);
+
+                    List<RawMetricModel> rawMetrics = new List<RawMetricModel>();
+                    
+                    if(results != null)
+                    {
+                        foreach (var result in results)
+                        {
+                            rawMetrics.Add(new RawMetricModel() { DeviceId = result.DeviceId, Date = result.Date, Value = result.Value });
+                        }
+                    }
+
+                    return rawMetrics;
+                }
+
+                return new List<RawMetricModel>();
             }
-            return new List<RawMetric>();
+            catch (WebFaultException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

@@ -134,32 +134,6 @@ namespace Atlantis.UserData.DAL
             }
         }
 
-        public List<Device> GetAllDevicesOfUser(User user)
-        {
-            try
-            {
-                if(user.Id == 0)
-                {
-                    var usr = _context.User.Where(x => x.UserId == user.UserId).FirstOrDefault();
-                    if(usr != null)
-                    {
-                        user.Id = usr.Id;
-                    }
-                    else
-                    {
-                        throw new Exception("User not found.");
-                    }
-                }
-
-                var results = _context.Device.Where(x => x.UserId == user.Id);
-                return results != null ? results.ToList() : new List<Device>();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
         public virtual Device GetByName(string deviceId)
         {
             try

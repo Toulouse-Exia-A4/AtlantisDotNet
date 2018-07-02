@@ -22,6 +22,8 @@ CREATE TABLE [dbo].[User]
 (
 	[Id] INT NOT NULL IDENTITY(0,1) PRIMARY KEY,
 	[UserId] VARCHAR(50) NOT NULL,
+	[Firstname] VARCHAR(50) NULL,
+	[Lastname] VARCHAR(50) NULL,
 	CONSTRAINT [AK_User_UserId] UNIQUE ([UserId])
 )
 

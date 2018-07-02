@@ -179,45 +179,6 @@ namespace Atlantis.UserData.DAL.Tests
         }
 
         [Test]
-        public void GivenUserIdShouldReturnDevices()
-        {
-            var data = new List<Device>
-            {
-                new Device() {Id = 0, DeviceId = "A", UserId = 2},
-                new Device() {Id = 1, DeviceId = "B", UserId = 1},
-                new Device() {Id = 2, DeviceId = "C", UserId = 2}
-            }.AsQueryable();
-
-            var mockContext = new Mock<UserDataContext>();
-            var mockSet = SetupDbSet(data);
-
-
-            mockContext.Setup(c => c.Device).Returns(mockSet.Object);
-
-            var usersMockSet = new Mock<DbSet<User>>();
-
-            var userData = new List<User>
-            {
-                new User() { Id = 1, UserId = "Toto"},
-                new User() { Id = 2, UserId = "Test"},
-            }.AsQueryable();
-
-            usersMockSet.As<IQueryable<User>>().Setup(m => m.Provider).Returns(userData.Provider);
-            usersMockSet.As<IQueryable<User>>().Setup(m => m.Expression).Returns(userData.Expression);
-            usersMockSet.As<IQueryable<User>>().Setup(m => m.ElementType).Returns(userData.ElementType);
-            usersMockSet.As<IQueryable<User>>().Setup(m => m.GetEnumerator()).Returns(userData.GetEnumerator());
-
-            mockContext.Setup(c => c.User).Returns(usersMockSet.Object);
-
-            var dao = new DeviceDAO(mockContext.Object);
-            var results = dao.GetAllDevicesOfUser(new User() { UserId = "Test" });
-
-            Assert.AreEqual(2, results.Count);
-            Assert.AreEqual("A", results[0].DeviceId);
-            Assert.AreEqual("C", results[1].DeviceId);
-        }
-
-        [Test]
         public void GivenDeviceNameShouldReturnDevice()
         {
             var data = new List<Device>
