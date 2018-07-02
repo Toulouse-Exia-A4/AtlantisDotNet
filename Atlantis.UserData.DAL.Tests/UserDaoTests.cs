@@ -43,7 +43,7 @@ namespace Atlantis.UserData.DAL.Tests
 
         // Add
         [Test]
-        public void GivenExistingUserForCreationShouldThrowException()
+        public void GivenExistingUserForCreationShouldReturnNull()
         {
             var data = new List<User> { new User() { Id = 0, UserId = "XXXX" } }.AsQueryable();
 
@@ -52,9 +52,9 @@ namespace Atlantis.UserData.DAL.Tests
             mockContext.Setup(c => c.User).Returns(mockSet.Object);
 
             var dao = new UserDAO(mockContext.Object);
+            var result = dao.Add(new User() { UserId = "XXXX" });
 
-            var ex = Assert.Throws<Exception>(() => dao.Add(new User() { UserId = "XXXX" }));
-            Assert.AreEqual("User already registered.", ex.Message);
+            Assert.AreEqual(null, result);
         }
 
         // All()
@@ -82,7 +82,7 @@ namespace Atlantis.UserData.DAL.Tests
         [Test]
         public void ShouldReturnAllUsersAsync()
         {
-
+            // TODO
         }
 
         // Get
@@ -105,7 +105,7 @@ namespace Atlantis.UserData.DAL.Tests
         [Test]
         public void GivenIdShouldReturnUserAsync()
         {
-            
+            // TODO
         }
 
         // Remove
@@ -124,6 +124,48 @@ namespace Atlantis.UserData.DAL.Tests
             mockContext.Verify(m => m.User.Remove(It.IsAny<User>()), Times.Once());
         }
 
+        // RemoveByUserId
+        [Test]
+        public void GivenUserIdShouldRemoveFromDb()
+        {
+            var data = new List<User>
+            {
+                new User() { Id = 0, UserId = "Test" },
+                new User() { Id = 1, UserId = "toto" }
+            }.AsQueryable();
+
+            var mockSet = SetupDbSet(data);
+
+            var mockContext = new Mock<UserDataContext>();
+            mockContext.Setup(c => c.User).Returns(mockSet.Object);
+
+            var dao = new UserDAO(mockContext.Object);
+            bool res = dao.RemoveByUserId("Test");
+
+            Assert.AreEqual(true, res);
+        }
+
+        // RemoveByUserId
+        [Test]
+        public void GivenWrongUserIdShouldNotRemoveFromDb()
+        {
+            var data = new List<User>
+            {
+                new User() { Id = 0, UserId = "Test" },
+                new User() { Id = 1, UserId = "toto" }
+            }.AsQueryable();
+
+            var mockSet = SetupDbSet(data);
+
+            var mockContext = new Mock<UserDataContext>();
+            mockContext.Setup(c => c.User).Returns(mockSet.Object);
+
+            var dao = new UserDAO(mockContext.Object);
+            bool res = dao.RemoveByUserId("UnitTest");
+
+            Assert.AreEqual(false, res);
+        }
+
         // Update
         [Test]
         public void GivenNewUserToUpdateShouldThrowException()
@@ -136,5 +178,26 @@ namespace Atlantis.UserData.DAL.Tests
             var ex = Assert.Throws<Exception>(() => dao.Update(newUser));
             Assert.AreEqual("User cannot be modified.", ex.Message);
         }
+
+        [Test]
+        public void GivenUserIdShouldReturnUser()
+        {
+            var data = new List<User>
+            {
+                new User() { Id = 0, UserId = "Test" },
+                new User() { Id = 1, UserId = "toto" }
+            }.AsQueryable();
+
+            var mockSet = SetupDbSet(data);
+
+            var mockContext = new Mock<UserDataContext>();
+            mockContext.Setup(c => c.User).Returns(mockSet.Object);
+
+            var dao = new UserDAO(mockContext.Object);
+            var result = dao.GetByUserId("Test");
+
+            Assert.AreEqual("Test", result.UserId);
+        }
+
     }
 }

@@ -16,42 +16,36 @@ namespace Atlantis.UserData.DAL
             _context = context;
         }
 
-        public Device Add(Device entity)
+        public virtual Device Add(Device entity)
         {
             try
             {
+                if (entity.DeviceId == null || entity.DeviceId.Length == 0)
+                    throw new Exception("DeviceId Field is required in order to add entity in DB.");
+
                 if (_context.DeviceType.Find(entity.DeviceTypeId) == null)
                 {
                     throw new Exception("Device.TypeId doesn't exist.");
                 }
 
-                var device = _context.Device.Add(new Device()
-                {
-                    DeviceId = entity.DeviceId,
-                    DeviceTypeId = entity.DeviceTypeId
-                });
-
-                if (entity.UserId.HasValue)
-                {
-                    device.UserId = entity.UserId;
-                }
-
+                var device = _context.Device.Add(entity);
                 _context.SaveChanges();
+
                 return device;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<Device> All()
+        public virtual List<Device> All()
         {
             try
             {
                 return _context.Device.ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -63,7 +57,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.Device.ToListAsync();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -75,7 +69,7 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.Device.Find(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -87,7 +81,7 @@ namespace Atlantis.UserData.DAL
             {
                 return await _context.Device.FindAsync(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -101,13 +95,13 @@ namespace Atlantis.UserData.DAL
                 _context.Device.Remove(device);
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public Device Update(Device newEntity)
+        public virtual Device Update(Device newEntity)
         {
             try
             {
@@ -116,7 +110,7 @@ namespace Atlantis.UserData.DAL
                 _context.SaveChanges();
                 return device;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
@@ -128,31 +122,45 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.Device.Where(x => x.DeviceTypeId == type.Id).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<Device> GetAllDevicesOfUser(User user)
-        {
-            try
-            {
-                return _context.Device.Where(x => x.UserId == user.Id).ToList();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-
-        public Device GetByName(string deviceId)
+        public virtual Device GetByName(string deviceId)
         {
             try
             {
                 return _context.Device.FirstOrDefault(x => x.DeviceId == deviceId);
             }
-            catch(Exception ex)
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public virtual void AddDeviceOwner(string deviceId, string userId)
+        {
+            try
+            {
+                var device = _context.Device.FirstOrDefault(x => x.DeviceId == deviceId);
+                var user = _context.User.FirstOrDefault(x => x.UserId == userId);
+
+                if (device != null && user != null)
+                {
+                    if (device.UserId.HasValue)
+                        throw new Exception("Device already have a owner.");
+
+                    device.UserId = user.Id;
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    throw new Exception("User or Device not found.");
+                }
+            }
+            catch(Exception)
             {
                 throw;
             }

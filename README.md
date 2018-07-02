@@ -1,0 +1,1 @@
+[![Build Status](https://travis-ci.com/Toulouse-Exia-A4/AtlantisDotNet.svg?branch=master)](https://travis-ci.com/Toulouse-Exia-A4/AtlantisDotNet)

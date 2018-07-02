@@ -1,0 +1,6 @@
+Atlantis.BackOffice.Service.Tests/Atlantis.BackOffice.Service.Tests.csproj
+Atlantis.Device.Service.Tests/Atlantis.Device.Service.Tests.csproj
+Atlantis.RawMetrics.Service.Tests/Atlantis.RawMetrics.Service.Tests.csproj
+Atlantis.UserData.Service.Tests/Atlantis.UserData.Service.Tests.csproj
+Atlantis.RawMetrics.DAL.Tests/Atlantis.RawMetrics.DAL.Tests.csproj
+Atlantis.UserData.DAL.Tests/Atlantis.UserData.DAL.Tests.csproj

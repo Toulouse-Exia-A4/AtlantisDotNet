@@ -16,32 +16,26 @@ namespace Atlantis.UserData.DAL
             _context = context;
         }
 
-        public User Add(User entity)
+        public virtual User Add(User entity)
         {
             try
             {
                 if (_context.User.FirstOrDefault(x => x.UserId == entity.UserId) == null)
                 {
-                    var user = _context.User.Add(new User()
-                    {
-                        UserId = entity.UserId
-                    });
+                    var user = _context.User.Add(entity);
 
                     _context.SaveChanges();
                     return user;
                 }
-                else
-                {
-                    throw new Exception("User already registered.");
-                }
+                return null;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<User> All()
+        public virtual List<User> All()
         {
             try
             {
@@ -71,7 +65,19 @@ namespace Atlantis.UserData.DAL
             {
                 return _context.User.Find(id);
             }
-            catch (Exception ex)
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public virtual User GetByUserId(string userId)
+        {
+            try
+            {
+                return _context.User.Where(x => x.UserId == userId).FirstOrDefault();
+            }
+            catch (Exception)
             {
                 throw;
             }
@@ -94,18 +100,52 @@ namespace Atlantis.UserData.DAL
             try
             {
                 var usr = _context.User.Find(id);
-                _context.User.Remove(usr);
-                _context.SaveChanges();
+                if (usr != null)
+                {
+                    _context.User.Remove(usr);
+                    _context.SaveChanges();
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }
         }
 
+        public virtual bool RemoveByUserId(string userId)
+        {
+            try
+            {
+                var usr = _context.User.Where(x => x.UserId == userId).FirstOrDefault();
+                if (usr != null)
+                {
+                    _context.User.Remove(usr);
+                    _context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return false;
+        }
+
         public User Update(User newEntity)
         {
             throw new Exception("User cannot be modified.");
+        }
+
+        public virtual ICollection<Device> GetUserDevices(User user)
+        {
+            try
+            {
+                return _context.User.Find(user.Id).Device;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
         }
     }
 }

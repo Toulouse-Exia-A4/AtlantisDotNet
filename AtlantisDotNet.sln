@@ -17,6 +17,120 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.RawMetrics.DAL", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.RawMetrics.DAL.Tests", "Atlantis.RawMetrics.DAL.Tests\Atlantis.RawMetrics.DAL.Tests.csproj", "{72E81285-5D5D-41FD-A985-C1EA3847AAF3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{42222AC7-C677-4C65-BFD6-30B77060BAE9}"
+	ProjectSection(SolutionItems) = preProject
+		UserData.CreateDatabase.sql = UserData.CreateDatabase.sql
+		UserData.InsertFakeData.sql = UserData.InsertFakeData.sql
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.UserData.API", "Atlantis.UserData.API\", "{0E923041-0741-47AE-B40A-EA421205F7A6}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		ProjectReferences = "{9497e5ee-7a98-4dd3-91ee-3c43fcb48980}|Atlantis.UserData.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50454"
+		Debug.AspNetCompiler.PhysicalPath = "Atlantis.UserData.API\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50454\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50454"
+		Release.AspNetCompiler.PhysicalPath = "Atlantis.UserData.API\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50454\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50454"
+		SlnRelativePath = "Atlantis.UserData.API\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.RawMetrics.API", "Atlantis.RawMetrics.API\", "{56D138CF-9D2D-4AC2-B8F7-22AFB9D97DCA}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		ProjectReferences = "{ba0cd172-6f92-4299-b553-0ff974128b44}|Atlantis.RawMetrics.Service.dll;{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}|Atlantis.RawMetrics.DAL.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_50563"
+		Debug.AspNetCompiler.PhysicalPath = "Atlantis.RawMetrics.API\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50563\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_50563"
+		Release.AspNetCompiler.PhysicalPath = "Atlantis.RawMetrics.API\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_50563\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "50563"
+		SlnRelativePath = "Atlantis.RawMetrics.API\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.RawMetrics.Service", "Atlantis.RawMetrics.Service\Atlantis.RawMetrics.Service.csproj", "{BA0CD172-6F92-4299-B553-0FF974128B44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.RawMetrics.Service.Tests", "Atlantis.RawMetrics.Service.Tests\Atlantis.RawMetrics.Service.Tests.csproj", "{7FFAD03D-C737-4BC1-A1F1-48E2DC5A09D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.UserData.Service.Tests", "Atlantis.UserData.Service.Tests\Atlantis.UserData.Service.Tests.csproj", "{4CED73E6-E424-437F-A318-F30EBB64A0E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.UserData.Service", "Atlantis.UserData.Service\Atlantis.UserData.Service.csproj", "{9497E5EE-7A98-4DD3-91EE-3C43FCB48980}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.Device.Service", "Atlantis.Device.Service\Atlantis.Device.Service.csproj", "{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.Device.Service.Tests", "Atlantis.Device.Service.Tests\Atlantis.Device.Service.Tests.csproj", "{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.Device.API", "Atlantis.Device.API\", "{2D19556A-6787-474B-BEB6-B53105C246DE}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		ProjectReferences = "{1242fdda-473e-4c1a-8d9f-daa2c1003a61}|Atlantis.Device.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56870"
+		Debug.AspNetCompiler.PhysicalPath = "Atlantis.Device.API\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56870\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56870"
+		Release.AspNetCompiler.PhysicalPath = "Atlantis.Device.API\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56870\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56870"
+		SlnRelativePath = "Atlantis.Device.API\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.BackOffice.Service", "Atlantis.BackOffice.Service\Atlantis.BackOffice.Service.csproj", "{CB3F54AD-C093-4092-A954-3EE755CB7CAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.BackOffice.Service.Tests", "Atlantis.BackOffice.Service.Tests\Atlantis.BackOffice.Service.Tests.csproj", "{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.BackOffice.API", "Atlantis.BackOffice.API\", "{13612F72-048E-4F73-B7D7-623FF44C2A1A}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
+		ProjectReferences = "{cb3f54ad-c093-4092-a954-3ee755cb7cab}|Atlantis.BackOffice.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_54939"
+		Debug.AspNetCompiler.PhysicalPath = "Atlantis.BackOffice.API\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54939\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_54939"
+		Release.AspNetCompiler.PhysicalPath = "Atlantis.BackOffice.API\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54939\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "54939"
+		SlnRelativePath = "Atlantis.BackOffice.API\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +165,54 @@ Global
 		{72E81285-5D5D-41FD-A985-C1EA3847AAF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72E81285-5D5D-41FD-A985-C1EA3847AAF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72E81285-5D5D-41FD-A985-C1EA3847AAF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E923041-0741-47AE-B40A-EA421205F7A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E923041-0741-47AE-B40A-EA421205F7A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E923041-0741-47AE-B40A-EA421205F7A6}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E923041-0741-47AE-B40A-EA421205F7A6}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{56D138CF-9D2D-4AC2-B8F7-22AFB9D97DCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D138CF-9D2D-4AC2-B8F7-22AFB9D97DCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D138CF-9D2D-4AC2-B8F7-22AFB9D97DCA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D138CF-9D2D-4AC2-B8F7-22AFB9D97DCA}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{BA0CD172-6F92-4299-B553-0FF974128B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA0CD172-6F92-4299-B553-0FF974128B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA0CD172-6F92-4299-B553-0FF974128B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA0CD172-6F92-4299-B553-0FF974128B44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FFAD03D-C737-4BC1-A1F1-48E2DC5A09D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FFAD03D-C737-4BC1-A1F1-48E2DC5A09D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FFAD03D-C737-4BC1-A1F1-48E2DC5A09D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FFAD03D-C737-4BC1-A1F1-48E2DC5A09D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CED73E6-E424-437F-A318-F30EBB64A0E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CED73E6-E424-437F-A318-F30EBB64A0E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CED73E6-E424-437F-A318-F30EBB64A0E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CED73E6-E424-437F-A318-F30EBB64A0E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9497E5EE-7A98-4DD3-91EE-3C43FCB48980}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9497E5EE-7A98-4DD3-91EE-3C43FCB48980}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9497E5EE-7A98-4DD3-91EE-3C43FCB48980}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9497E5EE-7A98-4DD3-91EE-3C43FCB48980}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D19556A-6787-474B-BEB6-B53105C246DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D19556A-6787-474B-BEB6-B53105C246DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D19556A-6787-474B-BEB6-B53105C246DE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D19556A-6787-474B-BEB6-B53105C246DE}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB3F54AD-C093-4092-A954-3EE755CB7CAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{478A68F7-286F-4846-BC81-E3F7ED4A5E9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

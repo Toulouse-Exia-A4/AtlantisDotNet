@@ -179,29 +179,6 @@ namespace Atlantis.UserData.DAL.Tests
         }
 
         [Test]
-        public void GivenUserIdShouldReturnDevices()
-        {
-            var data = new List<Device>
-            {
-                new Device() {Id = 0, DeviceId = "A", UserId = 0},
-                new Device() {Id = 1, DeviceId = "B", UserId = 1},
-                new Device() {Id = 2, DeviceId = "C", UserId = 0}
-            }.AsQueryable();
-
-            var mockContext = new Mock<UserDataContext>();
-            var mockSet = SetupDbSet(data);
-
-            mockContext.Setup(c => c.Device).Returns(mockSet.Object);
-
-            var dao = new DeviceDAO(mockContext.Object);
-            var results = dao.GetAllDevicesOfUser(new User() { Id = 0 });
-
-            Assert.AreEqual(2, results.Count);
-            Assert.AreEqual("A", results[0].DeviceId);
-            Assert.AreEqual("C", results[1].DeviceId);
-        }
-
-        [Test]
         public void GivenDeviceNameShouldReturnDevice()
         {
             var data = new List<Device>

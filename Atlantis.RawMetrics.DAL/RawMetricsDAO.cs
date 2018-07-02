@@ -6,27 +6,44 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using Atlantis.RawMetrics.DAL.Models;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using System.Configuration;
 
 namespace Atlantis.RawMetrics.DAL
 {
-    public class RawMetricsDAO : IMongoDataAccess<RawMetric, ObjectId>
+    public class RawMetricsDAO : IMongoDataAccess<RawMetric, string>
     {
-        RawMetricsContext _context;
+        private readonly RawMetricsContext _context;
 
-        private readonly IMongoCollection<RawMetric> _collection;
+        public RawMetricsDAO()
+        {
+            _context = new RawMetricsContext();
+        }
+
+        public RawMetricsDAO(string connectionString, string dbName)
+        {
+            _context = new RawMetricsContext(connectionString, dbName);
+        }
 
         public RawMetricsDAO(RawMetricsContext context)
         {
             _context = context;
-            _collection = _context.database.GetCollection<RawMetric>(ConfigurationManager.AppSettings["RawMetricsCollectionName"]);
+        }
+
+        bool Validate(RawMetric entity)
+        {
+            return entity.DeviceId != null && entity.DeviceId.Length > 0
+                && entity.Value != null && entity.Value.Length > 0;
         }
 
         public RawMetric Create(RawMetric entity)
         {
             try
             {
-                _collection.InsertOne(entity);
+                if (!Validate(entity))
+                    throw new Exception("RawMetric entity integrity not respected. Please verify all your required fields.");
+
+                _context.RawMetrics.InsertOne(entity);
                 return entity;
             }
             catch (Exception)
@@ -35,11 +52,11 @@ namespace Atlantis.RawMetrics.DAL
             }
         }
 
-        public void Delete(ObjectId id)
+        public void Delete(string id)
         {
             try
             {
-                _collection.DeleteOne(x => x.Id.Equals(id));
+                _context.RawMetrics.DeleteOne(x => x.Id.Equals(id));
             }
             catch (Exception)
             {
@@ -47,23 +64,11 @@ namespace Atlantis.RawMetrics.DAL
             }
         }
 
-        public RawMetric Get(ObjectId id)
+        public RawMetric Get(string id)
         {
             try
             {
-                return _collection.Find(x => x.Id.Equals(id)).FirstOrDefault();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        public List<RawMetric> GetAll()
-        {
-            try
-            {
-                return _collection.Find(Builders<RawMetric>.Filter.Empty).ToList();
+                return _context.RawMetrics.FindSync(x => x.Id.Equals(id)).FirstOrDefault();
             }
             catch (Exception)
             {
@@ -75,8 +80,11 @@ namespace Atlantis.RawMetrics.DAL
         {
             try
             {
+                if (!Validate(entity))
+                    throw new Exception("RawMetric entity integrity not respected. Please verify all your required fields.");
+
                 var filter = Builders<RawMetric>.Filter.Eq(s => s.Id, entity.Id);
-                var result = _collection.ReplaceOne(filter, entity);
+                var result = _context.RawMetrics.ReplaceOne(filter, entity);
                 return entity;
             }
             catch (Exception)
@@ -85,23 +93,43 @@ namespace Atlantis.RawMetrics.DAL
             }
         }
 
-        public List<RawMetric> GetAllMetricsForDevice(string deviceId)
+        public virtual List<RawMetric> GetMetricsForDevice(string deviceId)
         {
             try
             {
-                return _collection.Find<RawMetric>(x => x.DeviceId == deviceId).ToList();
+                var res = _context.RawMetrics.FindSync(x => x.DeviceId == deviceId);
+                return res != null ? res.ToList() : new List<RawMetric>();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 throw;
             }
         }
 
-        public List<RawMetric> GetAllOrderedByDeviceId()
+        public List<RawMetric> GetMetricsInPeriodASC(long fromDate, long toDate)
         {
             try
             {
-                return _collection.Find(Builders<RawMetric>.Filter.Empty).SortBy(x => x.DeviceId).ToList();
+                if (fromDate > toDate)
+                    throw new Exception("Error in parameters: fromDate is greater than toDate.");
+
+                var res = _context.RawMetrics.FindSync(x => x.Date >= fromDate && x.Date <= toDate);
+                return res != null ? res.ToList().OrderBy(x => x.DeviceId).ToList() : new List<RawMetric>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async virtual Task<List<RawMetric>> GetNDeviceMetricsPriorDate(string deviceId, long date, int resultQuantity)
+        {
+            try
+            {
+                var filter = Builders<RawMetric>.Filter.Eq(x => x.DeviceId, deviceId);
+                var results = new List<RawMetric>();
+                await _context.RawMetrics.Find(filter).ForEachAsync(m => results.Add(m));
+                return results.ToList().Where(x => x.Date < date).OrderByDescending(x => x.Date).Take(resultQuantity).ToList();
             }
             catch(Exception)
             {
