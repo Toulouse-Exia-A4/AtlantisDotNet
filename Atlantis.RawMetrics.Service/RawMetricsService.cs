@@ -27,16 +27,20 @@ namespace Atlantis.RawMetrics.Service
             _dao = dao;
         }
 
-        public List<RawMetricModel> GetRawMetricsFromDevice(int deviceId, long date, int amount)
+        public List<RawMetricModel> GetRawMetricsFromDevice(string deviceId, string date, string amount)
         {
             try
             {
-                if (deviceId == 0 || date == 0)
+                if (deviceId.Length == 0 || date.Length == 0)
                     throw new Exception("DeviceId / Date cannot be empty.");
 
-                if (amount > 0)
+                int _deviceId = int.Parse(deviceId);
+                long _date = long.Parse(date);
+                int _amount = int.Parse(amount);
+
+                if (_amount > 0)
                 {
-                    var results = _dao.GetNDeviceMetricsPriorDate(deviceId, date, amount);
+                    var results = _dao.GetNDeviceMetricsPriorDate(_deviceId, _date, _amount);
 
                     List<RawMetricModel> rawMetrics = new List<RawMetricModel>();
 

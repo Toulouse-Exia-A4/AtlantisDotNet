@@ -16,17 +16,17 @@ namespace Atlantis.Device.Service
         [WebInvoke(
             Method = "POST",
             UriTemplate = "/device/{id}/telemetry",
-            BodyStyle = WebMessageBodyStyle.Bare,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json
             )]
-        void AddRawMetric(int id, string date, string value);
+        void AddRawMetric(string id, string date, string value);
 
         [OperationContract]
         [WebInvoke(
             Method = "POST",
             UriTemplate = "/device",
-            BodyStyle = WebMessageBodyStyle.Bare,
+            BodyStyle = WebMessageBodyStyle.Wrapped,
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json
             )]

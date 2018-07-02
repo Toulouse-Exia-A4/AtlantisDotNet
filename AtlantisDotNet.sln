@@ -76,7 +76,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.Device.API", "Atlantis.Device.API\", "{2D19556A-6787-474B-BEB6-B53105C246DE}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{1242fdda-473e-4c1a-8d9f-daa2c1003a61}|Atlantis.Device.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;"
+		ProjectReferences = "{1242fdda-473e-4c1a-8d9f-daa2c1003a61}|Atlantis.Device.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}|Atlantis.RawMetrics.DAL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_56870"
 		Debug.AspNetCompiler.PhysicalPath = "Atlantis.Device.API\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56870\"
@@ -122,6 +122,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.BackOffice.API", "
 		SlnRelativePath = "Atlantis.BackOffice.API\"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dev.RawMetrics.DAL", "Dev.RawMetrics.DAL\Dev.RawMetrics.DAL.csproj", "{A8E2B212-150F-4DED-95E7-9ABB596AAEA0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +191,10 @@ Global
 		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{A8E2B212-150F-4DED-95E7-9ABB596AAEA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8E2B212-150F-4DED-95E7-9ABB596AAEA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8E2B212-150F-4DED-95E7-9ABB596AAEA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8E2B212-150F-4DED-95E7-9ABB596AAEA0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

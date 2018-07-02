@@ -67,7 +67,7 @@ namespace Atlantis.RawMetrics.DAL
         {
             try
             {
-                return _context.RawMetrics.FindSync(x => x.Id.Equals(id)).FirstOrDefault();
+                return _context.RawMetrics.FindSync(x => x.Id .Equals(id)).FirstOrDefault();
             }
             catch (Exception)
             {
