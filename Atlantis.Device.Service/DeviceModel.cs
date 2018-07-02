@@ -5,16 +5,13 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Atlantis.BackOffice.Service
+namespace Atlantis.Device.Service
 {
     [DataContract]
     public class DeviceModel
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }
-
-        [DataMember(Name ="name")]
-        public string Name { get; set; }
 
         [DataMember(Name = "deviceType")]
         public string DeviceType { get; set; }

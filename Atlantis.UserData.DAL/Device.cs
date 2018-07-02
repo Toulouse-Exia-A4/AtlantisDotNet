@@ -15,9 +15,9 @@ namespace Atlantis.UserData.DAL
     public partial class Device
     {
         public int Id { get; set; }
-        public string DeviceId { get; set; }
         public int DeviceTypeId { get; set; }
         public Nullable<int> UserId { get; set; }
+        public string Name { get; set; }
     
         public virtual DeviceType DeviceType { get; set; }
         public virtual User User { get; set; }

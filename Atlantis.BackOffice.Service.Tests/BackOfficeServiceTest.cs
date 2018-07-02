@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.ServiceModel.Web;
 using Atlantis.UserData.DAL;
 using Moq;
@@ -15,9 +17,9 @@ namespace Atlantis.BackOffice.Service.Tests
         {
             List<Device> devices = new List<Device>
             {
-                new Device() {DeviceId = "Test" },
-                new Device() {DeviceId = "Test1" },
-                new Device() {DeviceId = "Test2" }
+                new Device() {Id = 1, DeviceType = new DeviceType() {Type = "test" } },
+                new Device() {Id = 2, DeviceType = new DeviceType() {Type = "test" } },
+                new Device() {Id = 3, DeviceType = new DeviceType() {Type = "test" } }
             };
 
             var context = new Mock<UserDataContext>();
@@ -54,26 +56,11 @@ namespace Atlantis.BackOffice.Service.Tests
         }
 
         [Test]
-        public void LinkDeviceToUser_ShouldCallDaoAddDeviceOwner()
-        {
-            var context = new Mock<UserDataContext>();
-            var deviceDao = new Mock<DeviceDAO>(context.Object);
-            deviceDao.Setup(x => x.AddDeviceOwner(It.IsAny<string>(), It.IsAny<string>())).Verifiable();
-
-            var svc = new Mock<BackOfficeService>(context.Object);
-            svc.Setup(x => x.DeviceDAO).Returns(deviceDao.Object);
-
-            svc.Object.LinkDeviceToUser("test", "test");
-
-            deviceDao.Verify(x => x.AddDeviceOwner(It.IsAny<string>(), It.IsAny<string>()), Times.Once());
-        }
-
-        [Test]
         public void LinkDeviceToUser_GivenMissingUserIdShouldThrowException()
         {
             var context = new Mock<UserDataContext>();
             var svc = new Mock<BackOfficeService>(context.Object);
-            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser(null, "test"));
+            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser(null, 1));
         }
 
         [Test]
@@ -81,7 +68,7 @@ namespace Atlantis.BackOffice.Service.Tests
         {
             var context = new Mock<UserDataContext>();
             var svc = new Mock<BackOfficeService>(context.Object);
-            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser("test", null));
+            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser("test", 0));
         }
 
         [Test]

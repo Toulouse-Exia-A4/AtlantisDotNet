@@ -32,8 +32,7 @@ namespace Atlantis.RawMetrics.DAL
 
         bool Validate(RawMetric entity)
         {
-            return entity.DeviceId != null && entity.DeviceId.Length > 0
-                && entity.Value != null && entity.Value.Length > 0;
+            return entity.DeviceId != 0 && entity.Value != null && entity.Value.Length > 0 && entity.Date != 0;
         }
 
         public RawMetric Create(RawMetric entity)
@@ -93,12 +92,12 @@ namespace Atlantis.RawMetrics.DAL
             }
         }
 
-        public virtual List<RawMetric> GetMetricsForDevice(string deviceId)
+        public virtual List<RawMetric> GetMetricsForDevice(int deviceId)
         {
             try
             {
-                var res = _context.RawMetrics.FindSync(x => x.DeviceId == deviceId);
-                return res != null ? res.ToList() : new List<RawMetric>();
+                var metrics = _context.RawMetrics.FindSync<RawMetric>(x => x.DeviceId == deviceId);
+                return metrics == null ? new List<RawMetric>() : metrics.ToList();
             }
             catch (Exception)
             {
@@ -113,8 +112,12 @@ namespace Atlantis.RawMetrics.DAL
                 if (fromDate > toDate)
                     throw new Exception("Error in parameters: fromDate is greater than toDate.");
 
-                var res = _context.RawMetrics.FindSync(x => x.Date >= fromDate && x.Date <= toDate);
-                return res != null ? res.ToList().OrderBy(x => x.DeviceId).ToList() : new List<RawMetric>();
+                var metrics =  _context.RawMetrics.FindSync(x => x.Date >= fromDate && x.Date <= toDate);
+
+                if (metrics == null)
+                    return new List<RawMetric>();
+
+                return metrics.ToList().OrderBy(x => x.DeviceId).ToList();
             }
             catch (Exception)
             {
@@ -122,13 +125,16 @@ namespace Atlantis.RawMetrics.DAL
             }
         }
 
-        public async virtual Task<List<RawMetric>> GetNDeviceMetricsPriorDate(string deviceId, long date, int resultQuantity)
+        public virtual List<RawMetric> GetNDeviceMetricsPriorDate(int deviceId, long date, int resultQuantity)
         {
             try
             {
                 var filter = Builders<RawMetric>.Filter.Eq(x => x.DeviceId, deviceId);
-                var results = new List<RawMetric>();
-                await _context.RawMetrics.Find(filter).ForEachAsync(m => results.Add(m));
+                
+                var results = _context.RawMetrics.FindSync(filter);
+                if (results == null)
+                    return new List<RawMetric>();
+
                 return results.ToList().Where(x => x.Date < date).OrderByDescending(x => x.Date).Take(resultQuantity).ToList();
             }
             catch(Exception)

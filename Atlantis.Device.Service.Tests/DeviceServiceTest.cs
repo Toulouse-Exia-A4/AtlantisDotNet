@@ -9,59 +9,85 @@ namespace Atlantis.Device.Service.Tests
     [TestFixture]
     public class DeviceServiceTest
     {
-        [Test]
-        public void AddRawMetric_GivenInvalidModelShouldThrowException()
-        {
-            var context = new Mock<UserDataContext>();
-            var svc = new Mock<DeviceService>(context.Object);
-            svc.Setup(x => x.DeviceServiceHelper).Returns(new DeviceServiceHelpers());
-            DeviceMetricModel invalidModel = new DeviceMetricModel()
-            {
-                DeviceId = null
-            };
+        //[Test]
+        //public void AddRawMetric_GivenInvalidModelShouldThrowException()
+        //{
+        //    var context = new Mock<UserDataContext>();
+        //    var svc = new Mock<DeviceService>(context.Object);
+        //    svc.Setup(x => x.DeviceServiceHelper).Returns(new DeviceServiceHelpers());
+        //    MetricModel invalidModel = new MetricModel()
+        //    {
+        //        DeviceId = null
+        //    };
 
-            var ex = Assert.Throws<WebFaultException<string>>(() => svc.Object.AddRawMetric(invalidModel));
+        //    var ex = Assert.Throws<WebFaultException<string>>(() => svc.Object.AddRawMetric(invalidModel));
+        //}
+
+        //[Test]
+        //public void AddRawMetric_GivenInexistingDeviceShouldThrowException()
+        //{
+        //    var context = new Mock<UserDataContext>();
+        //    var deviceDao = new Mock<DeviceDAO>(context.Object);
+        //    deviceDao.Setup(x => x.GetByName(It.IsAny<string>())).Returns((UserData.DAL.Device)null);
+
+        //    var svc = new Mock<DeviceService>(context.Object);
+
+        //    MetricModel metricModel = new MetricModel()
+        //    {
+        //        DeviceId = "test",
+        //        Date = 1,
+        //        Value = "12"
+        //    };
+
+        //    var ex = Assert.Throws<WebFaultException<string>>(() => svc.Object.AddRawMetric(metricModel));
+        //    Assert.AreEqual("Device not found.", ex.Detail);
+        //}
+
+        //[Test]
+        //public void AddRawMetric_GivenExistingDeviceShouldCallSendMetricToQueue()
+        //{
+        //    var context = new Mock<UserDataContext>();
+        //    var deviceDao = new Mock<DeviceDAO>(context.Object);
+        //    deviceDao.Setup(x => x.GetByName(It.IsAny<string>())).Returns(new UserData.DAL.Device()
+        //    {
+        //        DeviceId = "test"
+        //    });
+
+        //    var svc = new Mock<DeviceService>(context.Object);
+
+        //}
+
+        [Test]
+        public void RegisterDevice_GivenInvalidModelShouldThrowException()
+        {
+
         }
 
         [Test]
-        public void AddRawMetric_GivenNewDeviceShouldAddInDbBeforeSendMetricsToQueue()
+        public void RegisterDevice_GivenNewDeviceTypeShouldAddItInDb()
         {
-            var context = new Mock<UserDataContext>();
-            var deviceDao = new Mock<DeviceDAO>(context.Object);
-            var deviceTypeDao = new Mock<DeviceTypeDAO>(context.Object);
 
-            deviceDao.Setup(x => x.GetByName(It.IsAny<string>())).Returns((UserData.DAL.Device)null);
-            deviceDao.Setup(x => x.Add(It.IsAny<UserData.DAL.Device>())).Returns(new UserData.DAL.Device() { DeviceId = "Test" });
-            deviceTypeDao.Setup(x => x.GetByTypeName(It.IsAny<string>())).Returns(new DeviceType() { Id = 0, Type = "type" });
-
-            var svc = new Mock<DeviceService>(context.Object);
-            svc.Setup(x => x.DeviceDAO).Returns(deviceDao.Object);
-            svc.Setup(x => x.DeviceTypeDAO).Returns(deviceTypeDao.Object);
-            svc.Setup(x => x.DeviceServiceHelper).Returns(new DeviceServiceHelpers());
-
-            svc.Object.AddRawMetric(new DeviceMetricModel() { DeviceId = "Test", DeviceType = "type", MetricValue = "value" });
-            deviceDao.Verify(d => d.Add(It.IsAny<UserData.DAL.Device>()), Times.Once());
         }
 
         [Test]
-        public void AddRawMetric_GivenExistingDeviceShouldSendMetricsToQueue()
+        public void RegisterDevice_GivenExistingDeviceTypeShouldRetrieveItFromDb()
         {
-            var context = new Mock<UserDataContext>();
-            var deviceDao = new Mock<DeviceDAO>(context.Object);
 
-            deviceDao.Setup(x => x.GetByName(It.IsAny<string>())).Returns(new UserData.DAL.Device()
-            {
-                DeviceId = "Test"
-            });
-
-            var svcHelper = new Mock<DeviceServiceHelpers>();
-
-            var svc = new Mock<DeviceService>(context.Object);
-            svc.Setup(x => x.DeviceDAO).Returns(deviceDao.Object);
-            svc.Setup(x => x.DeviceServiceHelper).Returns(svcHelper.Object);
-
-            svc.Object.AddRawMetric(new DeviceMetricModel() { DeviceId = "Test", DeviceType = "type", MetricValue = "value" });
-            svcHelper.Verify(x => x.SendMetricToQueue(It.IsAny<DeviceMetricModel>()), Times.Once());
         }
+
+        [Test]
+        public void RegisterDevice_GivenExistingDeviceShouldThrowException()
+        {
+
+        }
+
+        [Test]
+        public void RegisterDevice_GivenNewDeviceShouldAddInDb()
+        {
+
+        }
+
+
+        
     }
 }

@@ -1,4 +1,4 @@
-﻿// La génération de code T4 est activée pour le modèle 'D:\SourceCode\CSharp\AtlantisDotNet\Atlantis.UserData.DAL\UserDataEDM.edmx'. 
+﻿// La génération de code T4 est activée pour le modèle 'C:\_Atlantis\AtlantisDotNet\Atlantis.UserData.DAL\UserDataEDM.edmx'. 
 // Pour activer la génération de code héritée, définissez la valeur de la propriété
 // du concepteur 'Stratégie de génération de code' sur 'ObjectContext hérité'. Cette propriété est disponible dans la fenêtre Propriétés lorsque le modèle
 //  est ouvert dans le concepteur.
