@@ -35,7 +35,10 @@ namespace Atlantis.RawMetrics.Service
                     throw new Exception("DeviceId / Date cannot be empty.");
 
                 int _deviceId = int.Parse(deviceId);
-                long _date = long.Parse(date);
+
+                DateTime dateTime = DateTime.Parse(date);
+                long _date = ConvertToUnixTimestamp(dateTime);
+
                 int _amount = int.Parse(amount);
 
                 if (_amount > 0)
@@ -61,6 +64,13 @@ namespace Atlantis.RawMetrics.Service
             {
                 throw new WebFaultException<string>(ex.Message, HttpStatusCode.InternalServerError);
             }
+        }
+
+        public static long ConvertToUnixTimestamp(DateTime date)
+        {
+            DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            TimeSpan diff = date.ToUniversalTime() - origin;
+            return (long)diff.TotalMilliseconds;
         }
     }
 }
