@@ -125,6 +125,8 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.BackOffice.API", "
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricService", "MetricService\MetricService.csproj", "{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +197,10 @@ Global
 		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{13612F72-048E-4F73-B7D7-623FF44C2A1A}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
