@@ -12,6 +12,7 @@ namespace CalcEngineService
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
+        /// 
         static void Main()
         {
             ServiceBase[] ServicesToRun;
