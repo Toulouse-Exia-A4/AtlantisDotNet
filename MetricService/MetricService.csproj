@@ -48,7 +48,7 @@
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="WebLogic.Messaging">
-      <HintPath>C:\Users\Methilliev\Downloads\WebLogic.Messaging.dll</HintPath>
+      <HintPath>..\lib\WebLogic.Messaging.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
