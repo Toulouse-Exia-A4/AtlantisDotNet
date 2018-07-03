@@ -42,11 +42,11 @@ namespace Atlantis.Device.Service
         {
 
             IDictionary<string, Object> paramMap = new Dictionary<string, Object>();
-            paramMap[Constants.Context.PROVIDER_URL] = ConfigurationManager.AppSettings["jmsProviderUrl"];
+            paramMap[Constants.Context.PROVIDER_URL] = ConfigurationManager.AppSettings["jmsProviderUrl"].ToString();
 
             IContext jmsContext = ContextFactory.CreateContext(paramMap);
-            IConnectionFactory cf = jmsContext.LookupConnectionFactory(ConfigurationManager.AppSettings["jmsConnectionFactory"]);
-            IQueue queue = (IQueue)jmsContext.LookupDestination(ConfigurationManager.AppSettings["jmsQueue"]);
+            IConnectionFactory cf = jmsContext.LookupConnectionFactory(ConfigurationManager.AppSettings["jmsConnectionFactory"].ToString());
+            IQueue queue = (IQueue)jmsContext.LookupDestination(ConfigurationManager.AppSettings["jmsQueue"].ToString());
 
             IConnection connection;
 
