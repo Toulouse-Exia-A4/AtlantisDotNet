@@ -41,54 +41,46 @@ namespace Atlantis.Device.Service
         public void AddRawMetric(string id, string date, string value)
         {
 
-            //IDictionary<string, Object> paramMap = new Dictionary<string, Object>();
-            //paramMap[Constants.Context.PROVIDER_URL] = ConfigurationManager.AppSettings["jmsProviderUrl"];
+            IDictionary<string, Object> paramMap = new Dictionary<string, Object>();
+            paramMap[Constants.Context.PROVIDER_URL] = ConfigurationManager.AppSettings["jmsProviderUrl"];
 
-            //IContext jmsContext = ContextFactory.CreateContext(paramMap);
-            //IConnectionFactory cf = jmsContext.LookupConnectionFactory(ConfigurationManager.AppSettings["jmsConnectionFactory"]);
-            //ITopic topic = (ITopic)jmsContext.LookupDestination(ConfigurationManager.AppSettings["jmsTopic"]);
+            IContext jmsContext = ContextFactory.CreateContext(paramMap);
+            IConnectionFactory cf = jmsContext.LookupConnectionFactory(ConfigurationManager.AppSettings["jmsConnectionFactory"]);
+            IQueue queue = (IQueue)jmsContext.LookupDestination(ConfigurationManager.AppSettings["jmsQueue"]);
 
-            //IConnection connection;
+            IConnection connection;
 
-            //try
-            //{
-            //    if (date == null || date.Length == 0 || value == null || value.Length == 0)
-            //        throw new Exception("Missing parameters.");
-
-            //    var device = DeviceDAO.Get(int.Parse(id));
-
-            //    if (device == null)
-            //        throw new Exception("Device doesn't exist.");
-
-            //    connection = cf.CreateConnection();
-            //    connection.Start();
-
-            //    ISession producerSession = connection.CreateSession(Constants.SessionMode.AUTO_ACKNOWLEDGE);
-            //    IMessageProducer producer = producerSession.CreateProducer(topic);
-
-            //    producer.DeliveryMode = Constants.DeliveryMode.PERSISTENT;
-
-            //    MetricModel model = new MetricModel() { DeviceId = int.Parse(id), Date = date, Value = value };
-
-            //    ITextMessage jmsMessage = producerSession.CreateTextMessage(JsonConvert.SerializeObject(model));
-            //    producer.Send(jmsMessage);
-
-            //}
             try
             {
-                //MetricModel model = new MetricModel() { DeviceId = int.Parse(id), Date = date, Value = value };
 
-                RawMetrics.DAL.RawMetricsContext rawMetricsContext = new RawMetrics.DAL.RawMetricsContext(true);
-                RawMetrics.DAL.RawMetricsDAO dao = new RawMetrics.DAL.RawMetricsDAO(rawMetricsContext);
+                if (date == null || date.Length == 0 || value == null || value.Length == 0)
+                    throw new Exception("Missing raw metrics parameters.");
 
-                dao.Create(new RawMetrics.DAL.Models.RawMetric() { DeviceId = int.Parse(id), Date = long.Parse(date), Value = value });
+                var device = DeviceDAO.Get(int.Parse(id));
+
+                if (device == null)
+                    throw new Exception("Device doesn't exist.");
+
+                connection = cf.CreateConnection();
+                connection.Start();
+
+                ISession producerSession = connection.CreateSession(Constants.SessionMode.AUTO_ACKNOWLEDGE);
+                IMessageProducer producer = producerSession.CreateProducer(queue);
+
+                producer.DeliveryMode = Constants.DeliveryMode.PERSISTENT;
+
+                MetricModel model = new MetricModel() { DeviceId = int.Parse(id), Date = date, Value = value };
+
+                ITextMessage jmsMessage = producerSession.CreateTextMessage(JsonConvert.SerializeObject(model));
+                producer.Send(jmsMessage);
+
             }
             catch(Exception ex)
             {
                 throw new WebFaultException<string>(ex.Message, HttpStatusCode.MethodNotAllowed);
             }
 
-           // connection.Close();
+            connection.Close();
         }
 
         public DeviceModel RegisterDevice(string deviceType)
