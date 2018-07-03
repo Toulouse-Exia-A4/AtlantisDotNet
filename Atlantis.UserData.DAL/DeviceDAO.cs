@@ -161,5 +161,18 @@ namespace Atlantis.UserData.DAL
                 throw;
             }
         }
+
+        public List<Device> GetNoLinkedDevices()
+        {
+            try
+            {
+                var devices = _context.Device.Where(x => !x.UserId.HasValue);
+                return devices == null ? null : devices.ToList();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
     }
 }
