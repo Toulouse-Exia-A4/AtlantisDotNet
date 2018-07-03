@@ -60,7 +60,7 @@ namespace Atlantis.BackOffice.Service.Tests
         {
             var context = new Mock<UserDataContext>();
             var svc = new Mock<BackOfficeService>(context.Object);
-            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser(null, 1));
+            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser(null, "1"));
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace Atlantis.BackOffice.Service.Tests
         {
             var context = new Mock<UserDataContext>();
             var svc = new Mock<BackOfficeService>(context.Object);
-            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser("test", 0));
+            Assert.Throws<WebFaultException<string>>(() => svc.Object.LinkDeviceToUser("test", "0"));
         }
 
         [Test]

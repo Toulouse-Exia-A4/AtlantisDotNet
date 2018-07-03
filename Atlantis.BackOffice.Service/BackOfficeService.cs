@@ -100,14 +100,14 @@ namespace Atlantis.BackOffice.Service
             }
         }
 
-        public void LinkDeviceToUser(string userId, int deviceId)
+        public void LinkDeviceToUser(string userId, string deviceId)
         {
             try
             {
-                if (userId == null || userId.Length == 0 || deviceId != 0)
+                if (userId == null || userId.Length == 0 || deviceId.Length == 0)
                     throw new WebFaultException<string>("LinkDeviceToUser missing parameter.", HttpStatusCode.BadRequest);
 
-                DeviceDAO.AddDeviceOwner(deviceId, userId);
+                DeviceDAO.AddDeviceOwner(int.Parse(deviceId), userId);
             }
             catch(WebFaultException)
             {
@@ -133,6 +133,28 @@ namespace Atlantis.BackOffice.Service
                     return true;
             }
             catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<DeviceModel> GetNoLinkedDevices()
+        {
+            try
+            {
+                var devices = DeviceDAO.GetNoLinkedDevices();
+                if(devices != null)
+                {
+                    List<DeviceModel> rDevices = new List<DeviceModel>();
+                    foreach(var d in devices)
+                    {
+                        rDevices.Add(new DeviceModel() { Id = d.Id, Name = d.Name, DeviceType = d.DeviceType.Type });
+                    }
+                    return rDevices;
+                }
+                return null;
+            }
+            catch (Exception)
             {
                 throw;
             }
