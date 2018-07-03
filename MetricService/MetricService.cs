@@ -48,6 +48,19 @@ namespace MetricService
             connectionFactoryName = ConfigurationManager.AppSettings["connectionFactoryName"];
             topicName = ConfigurationManager.AppSettings["topicName"];
 
+        }
+
+        private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
+        {
+            log.WriteEntry("Message received :" + args.Message.ToString());
+            log.WriteEntry("Object converted :" + JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(args.Message.ToString()));
+            dao.Create(JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(args.Message.ToString()));
+        }
+
+        protected override void OnStart(string[] args)
+        {
+
+
             IDictionary<string, Object> paramMap = new Dictionary<string, Object>();
 
             paramMap[Constants.Context.PROVIDER_URL] =
@@ -55,11 +68,11 @@ namespace MetricService
 
             IContext context = ContextFactory.CreateContext(paramMap);
 
-           
+
             IConnectionFactory cf = context.LookupConnectionFactory(connectionFactoryName);
 
             IQueue queue = (IQueue)context.LookupDestination(topicName);
-                
+
             IConnection connection = cf.CreateConnection();
 
             connection.ClientID = "MetricService";
@@ -73,27 +86,12 @@ namespace MetricService
             consumer.Message += new MessageEventHandler(OnMessage);
 
 
-
-            autoEvent.WaitOne();
-    
-        
-             
-
-            }
-
-        private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
-        {
-            log.WriteEntry("Message received :" + args.Message.ToString());
-            log.WriteEntry("Object converted :" + JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(args.Message.ToString()));
-            dao.Create(JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(args.Message.ToString()));
-        }
-
-        protected override void OnStart(string[] args)
-        {
             log.WriteEntry("Service started");
             var _context = new RawMetricsContext(true);
             dao = new RawMetricsDAO(_context);
 
+            
+           
         }
 
         protected override void OnStop()

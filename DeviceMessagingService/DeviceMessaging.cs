@@ -18,16 +18,12 @@ namespace DeviceMessagingService
 {
     public partial class DeviceMessaging : ServiceBase
     {
-
-        static AutoResetEvent autoEvent = new AutoResetEvent(false);
-
         
         private string topicHost;
         private string topicPort;
         private string connectionFactoryName;
         private string topicName;
-
-        private bool stop;
+        
 
         EventLog log;
 
@@ -49,6 +45,23 @@ namespace DeviceMessagingService
             topicPort = ConfigurationManager.AppSettings["topicPort"];
             connectionFactoryName = ConfigurationManager.AppSettings["connectionFactoryName"];
             topicName = ConfigurationManager.AppSettings["topicName"];
+
+            
+
+
+        }
+
+        private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
+        {
+            log.WriteEntry("Message received :" + args.Message.ToString());
+
+
+            httpClient.PostAsync(httpClient.BaseAddress, new StringContent(args.Message.ToString())).Wait();
+        }
+
+        protected override void OnStart(string[] args)
+        {
+          
 
             IDictionary<string, Object> paramMap = new Dictionary<string, Object>();
 
@@ -74,26 +87,11 @@ namespace DeviceMessagingService
 
             consumer.Message += new MessageEventHandler(OnMessage);
 
-
-
-            autoEvent.WaitOne();
-
             httpClient = new HttpClient();
-            httpClient.BaseAddress=new Uri(ConfigurationManager.AppSettings["DeviceMessagingIP"]);
+            httpClient.BaseAddress = new Uri(ConfigurationManager.AppSettings["DeviceMessagingIP"]);
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-        }
-
-        private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
-        {
-            log.WriteEntry("Message received :" + args.Message.ToString());
-
-            httpClient.PostAsync(httpClient.BaseAddress, new StringContent(args.Message.ToString())).Wait();
-        }
-
-        protected override void OnStart(string[] args)
-        {
             log.WriteEntry("Service started");
 
         }
@@ -101,7 +99,6 @@ namespace DeviceMessagingService
         protected override void OnStop()
         {
             log.WriteEntry("Service stopped");
-            autoEvent.Set();
         }
 
     }
