@@ -27,8 +27,7 @@ namespace MetricService
         private string connectionFactoryName;
         private string topicName;
 
-        private bool stop;
-
+        Timer timer;
         EventLog log;
 
         public MetricService()
@@ -90,8 +89,9 @@ namespace MetricService
             var _context = new RawMetricsContext(true);
             dao = new RawMetricsDAO(_context);
 
-            
-           
+            timer = new Timer(KeepAlive);
+
+
         }
 
         protected override void OnStop()
@@ -100,6 +100,9 @@ namespace MetricService
             autoEvent.Set();
         }
 
+        private void KeepAlive(object state)
+        {
+        }
     }
 
 }

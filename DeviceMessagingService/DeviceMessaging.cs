@@ -23,7 +23,7 @@ namespace DeviceMessagingService
         private string topicPort;
         private string connectionFactoryName;
         private string topicName;
-        
+        Timer timer;
 
         EventLog log;
 
@@ -92,6 +92,8 @@ namespace DeviceMessagingService
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
+            timer = new Timer(KeepAlive);
+
             log.WriteEntry("Service started");
 
         }
@@ -101,5 +103,8 @@ namespace DeviceMessagingService
             log.WriteEntry("Service stopped");
         }
 
+        private void KeepAlive(object state)
+        {
+        }
     }
 }
