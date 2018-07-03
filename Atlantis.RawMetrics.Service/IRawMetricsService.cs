@@ -22,6 +22,6 @@ namespace Atlantis.RawMetrics.Service
         RequestFormat = WebMessageFormat.Json,
         ResponseFormat = WebMessageFormat.Json
         )]
-        Task<List<RawMetricModel>> GetRawMetricsFromDevice(string deviceId, long date, int amount);
+        List<RawMetricModel> GetRawMetricsFromDevice(string deviceId, string date, string amount);
     }
 }

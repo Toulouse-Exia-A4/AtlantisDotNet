@@ -11,7 +11,10 @@ namespace Atlantis.UserData.Service
     public class DeviceModel
     {
         [DataMember(Name ="deviceId")]
-        public string DeviceId { get; set; }
+        public int DeviceId { get; set; }
+
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
 
         [DataMember(Name = "type")]
         public DeviceTypeModel DeviceType { get; set; }

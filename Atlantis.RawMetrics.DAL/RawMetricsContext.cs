@@ -15,9 +15,9 @@ namespace Atlantis.RawMetrics.DAL
         {
             get
             {
-                string collectionName = ConfigurationManager.AppSettings["DbCollection"];
+                string collectionName = ConfigurationManager.AppSettings["DbCollection"].ToString();
                 if (collectionName == null)
-                    throw new Exception("RawMetricsCollection name is missing in config file.");
+                    throw new Exception("DbCollection name is missing in config file.");
                 return database.GetCollection<RawMetric>(collectionName);
             }
         }
@@ -31,8 +31,8 @@ namespace Atlantis.RawMetrics.DAL
         {
             if (autoInit)
             {
-                client = new MongoClient(ConfigurationManager.AppSettings["DbConnectionString"]);
-                database = client.GetDatabase(ConfigurationManager.AppSettings["DbName"]);
+                client = new MongoClient(ConfigurationManager.AppSettings["DbConnectionString"].ToString());
+                database = client.GetDatabase(ConfigurationManager.AppSettings["DbName"].ToString());
             }
         }
 
