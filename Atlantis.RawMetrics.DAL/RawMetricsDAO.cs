@@ -105,7 +105,7 @@ namespace Atlantis.RawMetrics.DAL
             }
         }
 
-        public List<RawMetric> GetMetricsInPeriodASC(long fromDate, long toDate)
+        public async Task<List<RawMetric>> GetMetricsInPeriodASC(long fromDate, long toDate)
         {
             try
             {
