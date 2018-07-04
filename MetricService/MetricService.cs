@@ -57,18 +57,22 @@ namespace MetricService
         {
             ITextMessage msg = (ITextMessage)args.Message;
             log.WriteEntry("Message received :" + msg.Text);
-            var rawMetricObject = JsonConvert.DeserializeObject<RawMetricModel>(msg.Text);
+             
+            dynamic rawMetricObject = JsonConvert.DeserializeObject(msg.Text);
             log.WriteEntry("Object converted :" + rawMetricObject.ToString());
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            long dateLong= Convert.ToInt64(DateTime.Parse(rawMetricObject.date) - epoch).TotalSeconds);
+            log.WriteEntry("date converted :" + rawMetricObject.ToString());
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
             {
-                Date = rawMetricObject.Date,
-                DeviceId = rawMetricObject.DeviceId,
-                Value = rawMetricObject.Value
+                Date = rawMetricObject.date,
+                DeviceId = rawMetricObject.deviceId,
+                Value = rawMetricObject.value
             };
             log.WriteEntry("Object converted2 :" + modelMetric.ToString());
             dao.Create(modelMetric);
             log.WriteEntry("Object created :" + rawMetricObject.ToString());
-
+            msg.Acknowledge();
         }
 
         protected override void OnStart(string[] args)
