@@ -61,7 +61,7 @@ namespace MetricService
             dynamic rawMetricObject = JsonConvert.DeserializeObject(msg.Text);
             log.WriteEntry("Object converted :" + rawMetricObject.ToString());
             log.WriteEntry("date  :" + rawMetricObject.date);
-            log.WriteEntry("device  :" + rawMetricObject.deviceId.);
+            log.WriteEntry("device  :" + rawMetricObject.deviceId);
             log.WriteEntry("value  :" + rawMetricObject.value);
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             long dateLong= Convert.ToInt64((new DateTime(rawMetricObject.date) - epoch).TotalMilliseconds);
