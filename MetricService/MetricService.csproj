@@ -76,6 +76,10 @@
       <Project>{9f424704-7da8-4ec5-b9c7-2b2e2a83d158}</Project>
       <Name>Atlantis.RawMetrics.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Atlantis.RawMetrics.Service\Atlantis.RawMetrics.Service.csproj">
+      <Project>{BA0CD172-6F92-4299-B553-0FF974128B44}</Project>
+      <Name>Atlantis.RawMetrics.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ProjectInstaller.resx">
