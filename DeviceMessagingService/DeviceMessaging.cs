@@ -35,23 +35,6 @@ namespace DeviceMessagingService
         public DeviceMessaging()
         {
             InitializeComponent();
-            log = new EventLog();
-            if (!System.Diagnostics.EventLog.SourceExists(ConfigurationManager.AppSettings["EventLogSource"]))
-            {
-                System.Diagnostics.EventLog.CreateEventSource(
-                    ConfigurationManager.AppSettings["EventLogSource"], ConfigurationManager.AppSettings["EventLogName"]);
-            }
-            log.Source = ConfigurationManager.AppSettings["EventLogSource"];
-            log.Log = ConfigurationManager.AppSettings["EventLogName"];
-
-            topicHost = ConfigurationManager.AppSettings["topicHost"];
-            topicPort = ConfigurationManager.AppSettings["topicPort"];
-            connectionFactoryName = ConfigurationManager.AppSettings["connectionFactoryName"];
-            topicName = ConfigurationManager.AppSettings["topicName"];
-
-            
-
-
         }
 
         private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
@@ -64,7 +47,15 @@ namespace DeviceMessagingService
 
         protected override void OnStart(string[] args)
         {
-          
+            log = new EventLog();
+            log.Source = ConfigurationManager.AppSettings["EventLogSource"];
+            log.Log = ConfigurationManager.AppSettings["EventLogName"];
+
+            topicHost = ConfigurationManager.AppSettings["topicHost"];
+            topicPort = ConfigurationManager.AppSettings["topicPort"];
+            connectionFactoryName = ConfigurationManager.AppSettings["connectionFactoryName"];
+            topicName = ConfigurationManager.AppSettings["topicName"];
+
 
             IDictionary<string, Object> paramMap = new Dictionary<string, Object>();
 
