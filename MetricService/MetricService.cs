@@ -1,4 +1,5 @@
 ﻿using Atlantis.RawMetrics.DAL;
+using Atlantis.RawMetrics.Service;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -55,7 +56,7 @@ namespace MetricService
         private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
         {
             ITextMessage msg = (ITextMessage)args.Message;
-            var rawMetricObject = JsonConvert.DeserializeObject<Atlantis.RawMetrics.Service.RawMetricModel>(msg.Text);
+            var rawMetricObject = JsonConvert.DeserializeObject<RawMetricModel>(msg.Text);
             log.WriteEntry("Message received :" + msg.Text);
             log.WriteEntry("Object converted :" + rawMetricObject.ToString());
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
