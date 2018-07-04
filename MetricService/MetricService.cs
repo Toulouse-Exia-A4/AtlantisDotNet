@@ -64,21 +64,15 @@ namespace MetricService
             log.WriteEntry("device  :" + rawMetricObject.deviceId.Value.GetType());
             log.WriteEntry("value  :" + rawMetricObject.value.Value.GetType());
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            long dateLong=0;
-            try { dateLong = Convert.ToInt64((new DateTime(rawMetricObject.date.Value) - epoch).TotalMilliseconds); }
-            catch (Exception e)
-            {
-                log.WriteEntry("MEssage: "+e.Message);
-                log.WriteEntry("Stack: "+e.Message);
-            }
-
+            
+            long dateLong = Convert.ToInt64((rawMetricObject.date.Value - epoch).TotalMilliseconds); 
             
             log.WriteEntry("date converted :" + rawMetricObject.ToString());
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
             {
                 Date = dateLong,
-                DeviceId = rawMetricObject.deviceId,
-                Value = rawMetricObject.value.ToString()
+                DeviceId = (int)rawMetricObject.deviceId.Value,
+                Value = rawMetricObject.value.Value
             };
             log.WriteEntry("Object converted2 :" + modelMetric.ToString());
             dao.Create(modelMetric);
