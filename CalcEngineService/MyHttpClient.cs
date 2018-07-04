@@ -33,13 +33,13 @@ namespace CalcEngineService
                 
                 /* We trace what is inside the json so we can retrieve what have been sent */
                 var eventLog1 = new EventLog();
-                if (!System.Diagnostics.EventLog.SourceExists("MySource"))
+                if (!System.Diagnostics.EventLog.SourceExists("Application"))
                 {
                     System.Diagnostics.EventLog.CreateEventSource(
-                        "MySource", "MyNewLog");
+                        "Application", "ApplicationLog");
                 }
-                eventLog1.Source = "MySource";
-                eventLog1.Log = "MyNewLog";
+                eventLog1.Source = "Application";
+                eventLog1.Log = "ApplicationLog";
                 eventLog1.WriteEntry(json.ToString());
 
                 await client.PostAsync(client.BaseAddress, new StringContent(json.ToString(), Encoding.UTF8, "application/json"));
@@ -47,17 +47,15 @@ namespace CalcEngineService
             catch (Exception e)
             {
                 var eventLog1 = new EventLog();
-                if (!System.Diagnostics.EventLog.SourceExists("MySource"))
+                if (!System.Diagnostics.EventLog.SourceExists("Application"))
                 {
                     System.Diagnostics.EventLog.CreateEventSource(
-                        "MySource", "MyNewLog");
+                        "Application", "ApplicationLog");
                 }
-                eventLog1.Source = "MySource";
-                eventLog1.Log = "MyNewLog";
+                eventLog1.Source = "Application";
+                eventLog1.Log = "ApplicationLog";
                 eventLog1.WriteEntry(e.Message);
             }
-
-            Console.ReadLine();
         }
 
     }

@@ -32,7 +32,7 @@ namespace CalcEngineService
         {
             try
             {
-                eventLog1.WriteEntry("Calc Engine started !", EventLogEntryType.Information);
+                eventLog1.WriteEntry("Calc Engine started.", EventLogEntryType.Information);
                 MyHttpClient.RunAsync().GetAwaiter().GetResult();
             }
             catch (Exception e) {
@@ -43,7 +43,7 @@ namespace CalcEngineService
 
         protected override void OnStop()
         {
-            eventLog1.WriteEntry("In onStop.");
+            eventLog1.WriteEntry("Calc Engine stopped.");
         }
     }
 }
