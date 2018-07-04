@@ -42,8 +42,14 @@ namespace DeviceMessagingService
             ITextMessage msg = (ITextMessage)args.Message;
             log.WriteEntry("Message received :" + msg.Text);
 
+            try
+            {
 
-            httpClient.PostAsync(httpClient.BaseAddress+"/message", new StringContent(msg.Text)).Wait();
+                httpClient.PostAsync(httpClient.BaseAddress + "/message", new StringContent(msg.Text)).Wait();
+            } catch(Exception e)
+            {
+                log.WriteEntry("MEssage :" + e.Message);
+            }
             log.WriteEntry("Message sent");
 
             args.Message.Acknowledge();
