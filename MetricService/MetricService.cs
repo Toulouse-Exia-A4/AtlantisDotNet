@@ -62,7 +62,7 @@ namespace MetricService
             log.WriteEntry("Object converted :" + rawMetricObject.ToString());
             log.WriteEntry("Object converted :" + rawMetricObject.date);
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            long dateLong= Convert.ToInt64((DateTime.Parse(rawMetricObject.date) - epoch).TotalSeconds);
+            long dateLong= Convert.ToInt64(rawMetricObject.date - epoch).TotalSeconds);
             log.WriteEntry("date converted :" + rawMetricObject.ToString());
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
             {
