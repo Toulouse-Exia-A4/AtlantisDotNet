@@ -56,21 +56,28 @@ namespace MetricService
         private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
         {
             ITextMessage msg = (ITextMessage)args.Message;
+            log.WriteEntry("Message received :" + msg.Text);
              
             dynamic rawMetricObject = JsonConvert.DeserializeObject(msg.Text);
+            log.WriteEntry("Object converted :" + rawMetricObject.ToString());
+            log.WriteEntry("date  :" + rawMetricObject.date.Value.GetType());
+            log.WriteEntry("device  :" + rawMetricObject.deviceId.Value.GetType());
+            log.WriteEntry("value  :" + rawMetricObject.value.Value.GetType());
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             
             long dateLong = Convert.ToInt64((rawMetricObject.date.Value - epoch).TotalMilliseconds); 
             
+            log.WriteEntry("date converted :" + rawMetricObject.ToString());
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
             {
                 Date = dateLong,
                 DeviceId = (int)rawMetricObject.deviceId.Value,
                 Value = rawMetricObject.value.Value
             };
-            var returnedValue=dao.Create(modelMetric);
+            log.WriteEntry("Object converted2 :" + modelMetric.ToString());
+            var returnValue=dao.Create(modelMetric);
+            log.WriteEntry("returnValue:" + rawMetricObject.ToString());
             log.WriteEntry("Object created :" + rawMetricObject.ToString());
-            log.WriteEntry("ReturnValue:" + returnedValue.ToString());
             msg.Acknowledge();
         }
 
