@@ -56,8 +56,8 @@ namespace MetricService
         private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
         {
             ITextMessage msg = (ITextMessage)args.Message;
-            var rawMetricObject = JsonConvert.DeserializeObject<RawMetricModel>(msg.Text);
             log.WriteEntry("Message received :" + msg.Text);
+            var rawMetricObject = JsonConvert.DeserializeObject<RawMetricModel>(msg.Text);
             log.WriteEntry("Object converted :" + rawMetricObject.ToString());
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
             {
@@ -65,9 +65,10 @@ namespace MetricService
                 DeviceId = rawMetricObject.DeviceId,
                 Value = rawMetricObject.Value
             };
+            log.WriteEntry("Object converted2 :" + rawMetricObject.ToString());
             dao.Create(modelMetric);
-            msg.Acknowledge();
-            
+            log.WriteEntry("Object created :" + rawMetricObject.ToString());
+
         }
 
         protected override void OnStart(string[] args)
