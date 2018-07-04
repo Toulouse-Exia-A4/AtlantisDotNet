@@ -59,9 +59,9 @@ namespace MetricService
             ITextMessage msg = (ITextMessage)args.Message;
              
             dynamic rawMetricObject = JsonConvert.DeserializeObject(msg.Text);
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             
-            long dateLong = Convert.ToInt64((rawMetricObject.date.Value - epoch).TotalMilliseconds); 
+            long dateLong = Convert.ToInt64((rawMetricObject.date.Value - epoch).Millisecond); 
             
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
             {
