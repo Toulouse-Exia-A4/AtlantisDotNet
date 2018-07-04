@@ -43,7 +43,8 @@ namespace DeviceMessagingService
             log.WriteEntry("Message received :" + msg.Text);
 
 
-            httpClient.PostAsync(httpClient.BaseAddress+"/message", new StringContent(args.Message.ToString())).Wait();
+            httpClient.PostAsync(httpClient.BaseAddress+"/message", new StringContent(msg.Text)).Wait();
+            log.WriteEntry("Message sent");
 
             args.Message.Acknowledge();
         }
