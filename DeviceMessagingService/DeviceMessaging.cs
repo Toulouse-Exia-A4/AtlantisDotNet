@@ -48,7 +48,7 @@ namespace DeviceMessagingService
         protected override void OnStart(string[] args)
         {
             log = new EventLog();
-            log.Source = ConfigurationManager.AppSettings["EventLogName"];
+            log.Source = ConfigurationManager.AppSettings["EventLogSource"];
             log.Log = ConfigurationManager.AppSettings["EventLogSource"];
 
             topicHost = ConfigurationManager.AppSettings["topicHost"];

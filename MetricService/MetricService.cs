@@ -43,7 +43,7 @@ namespace MetricService
                     ConfigurationManager.AppSettings["EventLogSource"], ConfigurationManager.AppSettings["EventLogName"]);
             }
             log.Source = ConfigurationManager.AppSettings["EventLogSource"];
-            log.Log = ConfigurationManager.AppSettings["EventLogName"];
+            log.Log = ConfigurationManager.AppSettings["EventLogSource"];
 
             topicHost = ConfigurationManager.AppSettings["topicHost"];
             topicPort = ConfigurationManager.AppSettings["topicPort"];
