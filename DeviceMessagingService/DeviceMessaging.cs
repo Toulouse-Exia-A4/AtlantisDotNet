@@ -71,7 +71,7 @@ namespace DeviceMessagingService
 
             IConnection connection = cf.CreateConnection();
 
-            connection.ClientID = "MetricService";
+            connection.ClientID = "DeviceMessagingService";
 
             connection.Start();
             ISession consumerSession = connection.CreateSession(
