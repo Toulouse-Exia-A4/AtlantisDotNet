@@ -60,13 +60,15 @@ namespace MetricService
              
             dynamic rawMetricObject = JsonConvert.DeserializeObject(msg.Text);
             log.WriteEntry("Object converted :" + rawMetricObject.ToString());
-            log.WriteEntry("Object converted :" + rawMetricObject.date);
+            log.WriteEntry("date  :" + rawMetricObject.date);
+            log.WriteEntry("device  :" + rawMetricObject.deviceId);
+            log.WriteEntry("value  :" + rawMetricObject.value);
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            long dateLong= Convert.ToInt64(rawMetricObject.date - epoch).TotalSeconds);
+            long dateLong= Convert.ToInt64((rawMetricObject.date - epoch).TotalSeconds);
             log.WriteEntry("date converted :" + rawMetricObject.ToString());
             Atlantis.RawMetrics.DAL.Models.RawMetric modelMetric = new Atlantis.RawMetrics.DAL.Models.RawMetric()
             {
-                Date = rawMetricObject.date,
+                Date = dateLong,
                 DeviceId = rawMetricObject.deviceId,
                 Value = rawMetricObject.value
             };
