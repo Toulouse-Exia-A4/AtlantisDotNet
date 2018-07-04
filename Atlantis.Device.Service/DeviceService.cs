@@ -1,12 +1,15 @@
 ﻿using Atlantis.UserData.DAL;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using WebLogic.Messaging;
 
 namespace Atlantis.Device.Service
 {
@@ -25,11 +28,6 @@ namespace Atlantis.Device.Service
             get { return new DeviceTypeDAO(_context); }
         }
 
-        public virtual DeviceServiceHelpers DeviceServiceHelper
-        {
-            get { return new DeviceServiceHelpers(); }
-        }
-
         public DeviceService()
         {
             _context = new UserDataContext();
@@ -40,25 +38,77 @@ namespace Atlantis.Device.Service
             _context = context;
         }
 
-        public void AddRawMetric(DeviceMetricModel deviceMetricModel)
+        public void AddRawMetric(string id, string date, string value)
+        {
+
+            IDictionary<string, Object> paramMap = new Dictionary<string, Object>();
+            paramMap[Constants.Context.PROVIDER_URL] = ConfigurationManager.AppSettings["jmsProviderUrl"].ToString();
+
+            IContext jmsContext = ContextFactory.CreateContext(paramMap);
+            IConnectionFactory cf = jmsContext.LookupConnectionFactory(ConfigurationManager.AppSettings["jmsConnectionFactory"].ToString());
+            IQueue queue = (IQueue)jmsContext.LookupDestination(ConfigurationManager.AppSettings["jmsQueue"].ToString());
+
+            IConnection connection;
+
+            try
+            {
+
+                if (date == null || date.Length == 0 || value == null || value.Length == 0)
+                    throw new Exception("Missing raw metrics parameters.");
+
+                var device = DeviceDAO.Get(int.Parse(id));
+
+                if (device == null)
+                    throw new Exception("Device doesn't exist.");
+
+                connection = cf.CreateConnection();
+                connection.Start();
+
+                ISession producerSession = connection.CreateSession(Constants.SessionMode.AUTO_ACKNOWLEDGE);
+                IMessageProducer producer = producerSession.CreateProducer(queue);
+
+                producer.DeliveryMode = Constants.DeliveryMode.PERSISTENT;
+
+                MetricModel model = new MetricModel() { DeviceId = int.Parse(id), Date = date, Value = value };
+
+                ITextMessage jmsMessage = producerSession.CreateTextMessage(JsonConvert.SerializeObject(model));
+                producer.Send(jmsMessage);
+
+            }
+            catch(Exception ex)
+            {
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.MethodNotAllowed);
+            }
+
+            connection.Close();
+        }
+
+        public DeviceModel RegisterDevice(string deviceType)
         {
             try
             {
-                if (!DeviceServiceHelper.ValidateDeviceMetricModel(deviceMetricModel))
-                    throw new WebFaultException<string>("deviceId or value is missing from request body.", HttpStatusCode.BadRequest);
+                DeviceType type = DeviceTypeDAO.GetByTypeName(deviceType);
 
-                var device = DeviceDAO.GetByName(deviceMetricModel.DeviceId);
+                if (type == null)
+                    throw new Exception("Invalid Device Type");
 
-                if (device == null)
+                UserData.DAL.Device device = new UserData.DAL.Device()
                 {
-                    DeviceServiceHelper.AddDevice(deviceMetricModel, DeviceTypeDAO, DeviceDAO);
-                }
+                    DeviceType = type,
+                    DeviceTypeId = type.Id
+                };
 
-                DeviceServiceHelper.SendMetricToQueue(deviceMetricModel);
+                var insertedDevice = DeviceDAO.Add(device);
+
+                return new DeviceModel()
+                {
+                    Id = insertedDevice.Id,
+                    DeviceType = insertedDevice.DeviceType.Type
+                };
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                throw;
+                throw new WebFaultException<string>(ex.Message, HttpStatusCode.MethodNotAllowed);
             }
         }
     }

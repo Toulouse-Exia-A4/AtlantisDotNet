@@ -20,13 +20,8 @@ namespace Atlantis.UserData.DAL
         {
             try
             {
-                if (entity.DeviceId == null || entity.DeviceId.Length == 0)
-                    throw new Exception("DeviceId Field is required in order to add entity in DB.");
-
-                if (_context.DeviceType.Find(entity.DeviceTypeId) == null)
-                {
+                if(entity.DeviceType == null && entity.DeviceTypeId == 0)
                     throw new Exception("Device.TypeId doesn't exist.");
-                }
 
                 var device = _context.Device.Add(entity);
                 _context.SaveChanges();
@@ -107,6 +102,7 @@ namespace Atlantis.UserData.DAL
             {
                 var device = _context.Device.Find(newEntity.Id);
                 device.UserId = newEntity.UserId;
+                device.Name = newEntity.Name;
                 _context.SaveChanges();
                 return device;
             }
@@ -128,11 +124,11 @@ namespace Atlantis.UserData.DAL
             }
         }
 
-        public virtual Device GetByName(string deviceId)
+        public virtual Device GetByName(string name)
         {
             try
             {
-                return _context.Device.FirstOrDefault(x => x.DeviceId == deviceId);
+                return _context.Device.FirstOrDefault(x => x.Name == name);
             }
             catch(Exception)
             {
@@ -140,11 +136,11 @@ namespace Atlantis.UserData.DAL
             }
         }
 
-        public virtual void AddDeviceOwner(string deviceId, string userId)
+        public virtual void AddDeviceOwner(int deviceId, string userId)
         {
             try
             {
-                var device = _context.Device.FirstOrDefault(x => x.DeviceId == deviceId);
+                var device = _context.Device.Find(deviceId);
                 var user = _context.User.FirstOrDefault(x => x.UserId == userId);
 
                 if (device != null && user != null)
@@ -159,6 +155,19 @@ namespace Atlantis.UserData.DAL
                 {
                     throw new Exception("User or Device not found.");
                 }
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<Device> GetNoLinkedDevices()
+        {
+            try
+            {
+                var devices = _context.Device.Where(x => !x.UserId.HasValue);
+                return devices == null ? null : devices.ToList();
             }
             catch(Exception)
             {

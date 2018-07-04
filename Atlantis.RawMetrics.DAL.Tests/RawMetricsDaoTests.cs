@@ -24,7 +24,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
             ctx.Setup(c => c.RawMetrics).Returns(mockCollection.Object);
 
             var dao = new RawMetricsDAO(ctx.Object);
-            var result = dao.Create(new RawMetric() { DeviceId = Guid.NewGuid().ToString(), Date = DateTime.Now.Ticks, Value = "12" });
+            var result = dao.Create(new RawMetric() { DeviceId = 2, Date = DateTime.Now.Ticks, Value = "12" });
 
             mockCollection.Verify(c => c.InsertOne(It.IsAny<RawMetric>(), It.IsAny<InsertOneOptions>(), It.IsAny<CancellationToken>()), Times.Once());
         }
@@ -65,7 +65,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
 
             var cursorMock = new Mock<IAsyncCursor<RawMetric>>();
             cursorMock.Setup(c => c.MoveNext(It.IsAny<CancellationToken>())).Returns(true);
-            cursorMock.Setup(c => c.Current).Returns(new[] { new RawMetric() { DeviceId = "Gonzales" } });
+            cursorMock.Setup(c => c.Current).Returns(new[] { new RawMetric() { DeviceId = 1 } });
             
             mockCollection.Setup(c => c.FindSync(It.IsAny<FilterDefinition<RawMetric>>(), It.IsAny<FindOptions<RawMetric, RawMetric>>(), It.IsAny<CancellationToken>())).Returns(cursorMock.Object);
             ctx.Setup(c => c.RawMetrics).Returns(mockCollection.Object);
@@ -75,7 +75,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
             var result = dao.Get("Toto");
 
             mockCollection.Verify(c => c.FindSync(It.IsAny<FilterDefinition<RawMetric>>(), It.IsAny<FindOptions<RawMetric, RawMetric>>(), It.IsAny<CancellationToken>()), Times.Once());
-            Assert.AreEqual("Gonzales", result.DeviceId);
+            Assert.AreEqual(1, result.DeviceId);
         }
 
         [Test]
@@ -83,7 +83,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
         {
             var ctx = new Mock<RawMetricsContext>(false);
             var mockCollection = new Mock<IMongoCollection<RawMetric>>();
-            string deviceId = Guid.NewGuid().ToString();
+            int deviceId = 1;
 
             ctx.Setup(c => c.RawMetrics).Returns(mockCollection.Object);
 
@@ -103,7 +103,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
 
             var ctx = new Mock<RawMetricsContext>(false);
             var mockCollection = new Mock<IMongoCollection<RawMetric>>();
-            string deviceId = Guid.NewGuid().ToString();
+            int deviceId = 1;
 
             ctx.Setup(c => c.RawMetrics).Returns(mockCollection.Object);
 
@@ -125,7 +125,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
 
             var dao = new RawMetricsDAO(ctx.Object);
 
-            dao.GetMetricsForDevice("toto");
+            dao.GetMetricsForDevice(1);
             mockCollection.Verify(c => c.FindSync(It.IsAny<FilterDefinition<RawMetric>>(), It.IsAny<FindOptions<RawMetric, RawMetric>>(), It.IsAny<CancellationToken>()), Times.Once());
         }
 
@@ -156,7 +156,5 @@ namespace Atlantis.RawMetrics.DAL.Tests
             var ex = Assert.Throws<Exception>(() => dao.GetMetricsInPeriodASC(2, 1));
             Assert.AreEqual("Error in parameters: fromDate is greater than toDate.", ex.Message);
         }
-
-
     }
 }

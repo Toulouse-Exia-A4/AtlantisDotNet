@@ -51,5 +51,15 @@ namespace Atlantis.BackOffice.Service
             ResponseFormat = WebMessageFormat.Json
         )]
         void LinkDeviceToUser(string userId, string deviceId);
+
+        [OperationContract]
+        [WebInvoke(
+            Method = "GET",
+            UriTemplate = "/freedevices",
+            BodyStyle = WebMessageBodyStyle.Bare,
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json
+        )]
+        List<DeviceModel> GetNoLinkedDevices();
     }
 }

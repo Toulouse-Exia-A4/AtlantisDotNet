@@ -15,7 +15,7 @@ namespace Atlantis.RawMetrics.DAL.Models
         public string Id { get; set; }
 
         [BsonElement("device_id")]
-        public string DeviceId { get; set; }
+        public int DeviceId { get; set; }
 
         [BsonElement("date")]
         public long Date { get; set; }

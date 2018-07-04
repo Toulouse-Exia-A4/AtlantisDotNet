@@ -11,7 +11,7 @@ namespace Atlantis.RawMetrics.Service
     public class RawMetricModel
     {
         [DataMember(Name = "deviceId")]
-        public string DeviceId { get; set; }
+        public int DeviceId { get; set; }
 
         [DataMember(Name = "date")]
         public long Date { get; set; }

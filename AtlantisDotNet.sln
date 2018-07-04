@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcEngineService", "CalcEngineService\CalcEngineService.csproj", "{FE9FA1D7-EF0E-453B-AA69-8B70B880C21E}"
 EndProject
@@ -75,12 +75,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.UserData.Service",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.Device.Service", "Atlantis.Device.Service\Atlantis.Device.Service.csproj", "{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlantis.Device.Service.Tests", "Atlantis.Device.Service.Tests\Atlantis.Device.Service.Tests.csproj", "{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}"
-EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.Device.API", "Atlantis.Device.API\", "{2D19556A-6787-474B-BEB6-B53105C246DE}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{1242fdda-473e-4c1a-8d9f-daa2c1003a61}|Atlantis.Device.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;"
+		ProjectReferences = "{1242fdda-473e-4c1a-8d9f-daa2c1003a61}|Atlantis.Device.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;{9F424704-7DA8-4EC5-B9C7-2B2E2A83D158}|Atlantis.RawMetrics.DAL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_56870"
 		Debug.AspNetCompiler.PhysicalPath = "Atlantis.Device.API\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56870\"
@@ -107,7 +105,7 @@ EndProject
 Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.BackOffice.API", "Atlantis.BackOffice.API\", "{13612F72-048E-4F73-B7D7-623FF44C2A1A}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5.2"
-		ProjectReferences = "{cb3f54ad-c093-4092-a954-3ee755cb7cab}|Atlantis.BackOffice.Service.dll;{628588F5-A876-4770-8375-0E58EAD4BCBB}|Atlantis.UserData.DAL.dll;"
+		ProjectReferences = "{cb3f54ad-c093-4092-a954-3ee755cb7cab}|Atlantis.BackOffice.Service.dll;{628588f5-a876-4770-8375-0e58ead4bcbb}|Atlantis.UserData.DAL.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_54939"
 		Debug.AspNetCompiler.PhysicalPath = "Atlantis.BackOffice.API\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_54939\"
@@ -128,6 +126,10 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Atlantis.BackOffice.API", "
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalcEngineService.Tests", "TestCalculationEngineService\CalcEngineService.Tests.csproj", "{530F1992-65C6-4CB4-82EC-85FA81A7104B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetricService", "MetricService\MetricService.csproj", "{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceMessagingService", "DeviceMessagingService\DeviceMessagingService.csproj", "{582B1B9F-E6CC-4B1D-B46D-CEBF7941FF59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,10 +185,6 @@ Global
 		{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1242FDDA-473E-4C1A-8D9F-DAA2C1003A61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B111E377-8424-4AF9-A3F2-B0B4B5071B7E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2D19556A-6787-474B-BEB6-B53105C246DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2D19556A-6787-474B-BEB6-B53105C246DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D19556A-6787-474B-BEB6-B53105C246DE}.Release|Any CPU.ActiveCfg = Debug|Any CPU
@@ -207,6 +205,14 @@ Global
 		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{530F1992-65C6-4CB4-82EC-85FA81A7104B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F71854D-0770-4AF0-88E2-2FAA8CA1DDEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{582B1B9F-E6CC-4B1D-B46D-CEBF7941FF59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{582B1B9F-E6CC-4B1D-B46D-CEBF7941FF59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{582B1B9F-E6CC-4B1D-B46D-CEBF7941FF59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{582B1B9F-E6CC-4B1D-B46D-CEBF7941FF59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
