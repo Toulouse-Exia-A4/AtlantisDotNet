@@ -1,4 +1,4 @@
-﻿INSERT INTO [Admin] (AdminId, Password) VALUES ('AtlantisAdmin', 'pass');
+﻿INSERT INTO [Admin] (AdminId, Password) VALUES ('AtlantisAdmin', '1a1dc91c907325c69271ddf0c944bc72');
 
 INSERT INTO [User] (UserId, Firstname, Lastname) VALUES ('aaaaaaaa', 'Jean', 'Dupond');
 INSERT INTO [User] (UserId, Firstname, Lastname) VALUES ('bbbbbbbb', 'Alfred', 'Polochon');
