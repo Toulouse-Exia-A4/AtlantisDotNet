@@ -54,9 +54,11 @@ namespace MetricService
 
         private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
         {
-            log.WriteEntry("Message received :" + args.Message.ToString());
-            log.WriteEntry("Object converted :" + JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(args.Message.ToString()));
-            dao.Create(JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(args.Message.ToString()));
+            ITextMessage msg = (ITextMessage)args.Message;
+            log.WriteEntry("Message received :" + msg.Text);
+            log.WriteEntry("Object converted :" + JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(msg.Text));
+            dao.Create(JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(msg.Text));
+            args.Message.Acknowledge();
         }
 
         protected override void OnStart(string[] args)

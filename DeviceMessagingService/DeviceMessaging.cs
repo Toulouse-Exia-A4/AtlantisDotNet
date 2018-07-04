@@ -39,10 +39,13 @@ namespace DeviceMessagingService
 
         private void OnMessage(IMessageConsumer sender, MessageEventArgs args)
         {
-            log.WriteEntry("Message received :" + args.Message.ToString());
+            ITextMessage msg = (ITextMessage)args.Message;
+            log.WriteEntry("Message received :" + msg.Text);
 
 
             httpClient.PostAsync(httpClient.BaseAddress+"/message", new StringContent(args.Message.ToString())).Wait();
+
+            args.Message.Acknowledge();
         }
 
         protected override void OnStart(string[] args)
