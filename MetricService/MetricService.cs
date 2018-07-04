@@ -65,7 +65,7 @@ namespace MetricService
                 DeviceId = rawMetricObject.DeviceId,
                 Value = rawMetricObject.Value
             };
-            log.WriteEntry("Object converted2 :" + rawMetricObject.ToString());
+            log.WriteEntry("Object converted2 :" + modelMetric.ToString());
             dao.Create(modelMetric);
             log.WriteEntry("Object created :" + rawMetricObject.ToString());
 
