@@ -47,7 +47,7 @@ namespace DeviceMessagingService
 
                 log.WriteEntry("BAseAdresse :" + httpClient.BaseAddress);
                 log.WriteEntry("message :" + msg.Text);
-                httpClient.PostAsync(httpClient.BaseAddress + "message", new StringContent(msg.Text, Encoding.UTF8, "application/json")).RunSynchronously();
+                httpClient.PostAsync(httpClient.BaseAddress + "message", new StringContent(msg.Text, Encoding.UTF8, "application/json")).Wait();
             } catch(Exception e)
             {
                 log.WriteEntry("MEssage :" + e.Message);
