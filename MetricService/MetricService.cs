@@ -77,14 +77,7 @@ namespace MetricService
             };
             log.WriteEntry("Object converted2 :" + modelMetric.ToString());
             RawMetric returnValue;
-            try
-            {
-                returnValue = dao.Create(modelMetric);
-            } catch (Exception e)
-            {
-                
-                log.WriteEntry("Message : " + e.Message);
-            }
+            returnValue = dao.Create(modelMetric);
             log.WriteEntry("returnValue:" + rawMetricObject.ToString());
             log.WriteEntry("Object created :" + rawMetricObject.ToString());
             msg.Acknowledge();
