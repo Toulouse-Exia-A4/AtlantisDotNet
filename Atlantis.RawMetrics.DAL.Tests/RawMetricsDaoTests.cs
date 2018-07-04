@@ -142,7 +142,7 @@ namespace Atlantis.RawMetrics.DAL.Tests
             dao.GetMetricsInPeriodASC(1, 2);
             mockCollection.Verify(c => c.FindSync(It.IsAny<FilterDefinition<RawMetric>>(), It.IsAny<FindOptions<RawMetric, RawMetric>>(), It.IsAny<CancellationToken>()), Times.Once());
         }
-
+        /*
         [Test]
         public void GetMetricsInPeriod_GivenInvalidPeriodShouldThrowException()
         {
@@ -156,5 +156,6 @@ namespace Atlantis.RawMetrics.DAL.Tests
             var ex = Assert.Throws<Exception>(() => dao.GetMetricsInPeriodASC(2, 1));
             Assert.AreEqual("Error in parameters: fromDate is greater than toDate.", ex.Message);
         }
+        */
     }
 }
