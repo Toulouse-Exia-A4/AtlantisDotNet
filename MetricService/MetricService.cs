@@ -56,9 +56,11 @@ namespace MetricService
         {
             ITextMessage msg = (ITextMessage)args.Message;
             log.WriteEntry("Message received :" + msg.Text);
-            log.WriteEntry("Object converted :" + JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(msg.Text));
+            log.WriteEntry("Object converted :" + JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(msg.Text).ToString());
             dao.Create(JsonConvert.DeserializeObject<Atlantis.RawMetrics.DAL.Models.RawMetric>(msg.Text));
-            args.Message.Acknowledge();
+            log.WriteEntry("Raw metric ack");
+            msg.Acknowledge();
+            
         }
 
         protected override void OnStart(string[] args)
@@ -86,6 +88,7 @@ namespace MetricService
                                 Constants.SessionMode.AUTO_ACKNOWLEDGE);
 
             IMessageConsumer consumer = consumerSession.CreateConsumer(queue);
+            
 
             consumer.Message += new MessageEventHandler(OnMessage);
 
