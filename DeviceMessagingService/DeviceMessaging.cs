@@ -42,7 +42,7 @@ namespace DeviceMessagingService
             log.WriteEntry("Message received :" + args.Message.ToString());
 
 
-            httpClient.PostAsync(httpClient.BaseAddress, new StringContent(args.Message.ToString())).Wait();
+            httpClient.PostAsync(httpClient.BaseAddress+"/message", new StringContent(args.Message.ToString())).Wait();
         }
 
         protected override void OnStart(string[] args)
