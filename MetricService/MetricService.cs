@@ -27,7 +27,10 @@ namespace MetricService
         private string connectionFactoryName;
         private string topicName;
 
-        Timer timer;
+        //To keep service alive
+        private ManualResetEvent _shutdownEvent = new ManualResetEvent(false);
+        private Thread _thread;
+        
         EventLog log;
 
         public MetricService()
@@ -88,20 +91,32 @@ namespace MetricService
             log.WriteEntry("Service started");
             var _context = new RawMetricsContext(true);
             dao = new RawMetricsDAO(_context);
+            
 
-            timer = new Timer(KeepAlive);
-
+            _thread = new Thread(KeepAlive);
+            _thread.Name = "My Worker Thread";
+            _thread.IsBackground = true;
+            _thread.Start();
 
         }
 
         protected override void OnStop()
         {
             log.WriteEntry("Service stopped");
-            autoEvent.Set();
+            _shutdownEvent.Set();
+            if (!_thread.Join(3000))
+            { // give the thread 3 seconds to stop
+                _thread.Abort();
+            }
         }
 
-        private void KeepAlive(object state)
+        private void KeepAlive()
         {
+            while (!_shutdownEvent.WaitOne(0))
+            {
+                // Replace the Sleep() call with the work you need to do
+                Thread.Sleep(1000);
+            }
         }
     }
 
