@@ -24,36 +24,26 @@ namespace CalcEngineService
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                        
+            
+            var eventLog1 = new EventLog();
+            if (!System.Diagnostics.EventLog.SourceExists("Application"))
+            {
+                System.Diagnostics.EventLog.CreateEventSource(
+                    "Application", "ApplicationLog");
+            }
+            eventLog1.Source = "Application";
+            eventLog1.Log = "ApplicationLog";
+
             try
             {
                 // Create the calculated metric
                 Calculator calc = new Calculator();
-                var json = new JavaScriptSerializer().Serialize(await calc.generateCalculatedMetrics());
-                
-                /* We trace what is inside the json so we can retrieve what have been sent */
-                var eventLog1 = new EventLog();
-                if (!System.Diagnostics.EventLog.SourceExists("Application"))
-                {
-                    System.Diagnostics.EventLog.CreateEventSource(
-                        "Application", "ApplicationLog");
-                }
-                eventLog1.Source = "Application";
-                eventLog1.Log = "ApplicationLog";
+                var json = new JavaScriptSerializer().Serialize(await calc.generateCalculatedMetrics()); 
                 eventLog1.WriteEntry(json.ToString());
-
                 await client.PostAsync(client.BaseAddress, new StringContent(json.ToString(), Encoding.UTF8, "application/json"));
             }
             catch (Exception e)
             {
-                var eventLog1 = new EventLog();
-                if (!System.Diagnostics.EventLog.SourceExists("Application"))
-                {
-                    System.Diagnostics.EventLog.CreateEventSource(
-                        "Application", "ApplicationLog");
-                }
-                eventLog1.Source = "Application";
-                eventLog1.Log = "ApplicationLog";
                 eventLog1.WriteEntry(e.Message);
             }
         }
